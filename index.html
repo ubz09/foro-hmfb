@@ -32,20 +32,21 @@
             max-width: 500px;
             width: 90%;
             text-align: center;
-            border: 2px solid #800080;
+            border: 2px solid #00ffff;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
         
         .user-wall h1 {
-            color: #800080;
+            color: #00ffff;
             font-size: 32px;
             margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
         
         .user-wall h2 {
-            color: #ff4444;
+            color: #00ffff;
             font-size: 24px;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
         }
         
         .user-input-group {
@@ -56,45 +57,24 @@
             width: 100%;
             padding: 15px;
             background: #333;
-            border: 2px solid #444;
+            border: 2px solid #00ffff;
             color: white;
             border-radius: 8px;
             font-size: 18px;
             text-align: center;
+            letter-spacing: 1px;
         }
         
         .user-input-group input:focus {
-            border-color: #800080;
+            border-color: #00ffff;
             outline: none;
-        }
-        
-        .quick-users {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .quick-user-btn {
-            padding: 12px;
-            background: #444;
-            color: #ccc;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .quick-user-btn:hover {
-            background: #800080;
-            color: white;
-            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
         }
         
         .enter-btn {
             width: 100%;
             padding: 15px;
-            background: #800080;
+            background: linear-gradient(135deg, #00aaaa 0%, #00ffff 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -106,16 +86,22 @@
         }
         
         .enter-btn:hover {
-            background: #990099;
+            background: linear-gradient(135deg, #00cccc 0%, #00ffff 100%);
             transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
+        }
+        
+        .enter-btn:active {
+            transform: translateY(0);
         }
         
         .user-warning {
-            background: rgba(255, 68, 68, 0.1);
+            background: rgba(0, 255, 255, 0.1);
             padding: 15px;
             border-radius: 10px;
             margin: 20px 0;
-            text-align: left;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.3);
         }
         
         .blur-content {
@@ -124,29 +110,31 @@
             user-select: none;
         }
         
-        .user-avatar-selector {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+        .aqua-glow {
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
         }
         
-        .avatar-option {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.3s;
+        .auto-enter {
+            margin-top: 15px;
+            color: #00aaaa;
+            font-size: 13px;
         }
         
-        .avatar-option:hover {
-            transform: scale(1.1);
+        .username-rules {
+            color: #00aaaa;
+            font-size: 12px;
+            margin-top: 10px;
         }
         
-        .avatar-option.selected {
-            border-color: #800080;
-            box-shadow: 0 0 15px #800080;
+        .aqua-pulse {
+            animation: aquaPulse 2s infinite;
+        }
+        
+        @keyframes aquaPulse {
+            0% { border-color: #00aaaa; box-shadow: 0 0 5px rgba(0, 170, 170, 0.5); }
+            50% { border-color: #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
+            100% { border-color: #00aaaa; box-shadow: 0 0 5px rgba(0, 170, 170, 0.5); }
         }
     </style>
 </head>
@@ -157,53 +145,46 @@
             <div style="margin-bottom: 20px;">
                 <img src="https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png" 
                      alt="HMFB Logo" 
-                     style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #800080; margin-bottom: 15px;">
+                     style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #00ffff; margin-bottom: 15px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);">
                 <h1>🔥 HMFB FORUM</h1>
-                <h2>👤 USUARIO REQUERIDO</h2>
-                <p style="color: #b4b4b4;">Elige un nombre para identificarte en el foro</p>
+                <h2 class="aqua-glow">INGRESA TU NOMBRE</h2>
+                <p style="color: #b4b4b4; margin-bottom: 5px;">Este será tu identificador en el foro</p>
+                <p style="color: #00aaaa; font-size: 14px;">Todos los usuarios usan color aqua</p>
             </div>
             
             <div class="user-input-group">
                 <input type="text" 
                        id="usernameInput" 
-                       placeholder="¿Cómo quieres que te llamen?"
+                       placeholder="¿Cómo quieres llamarte?"
                        maxlength="20"
-                       autocomplete="off">
-                <p style="color: #888; font-size: 14px; margin-top: 10px;">
-                    Solo letras, números y espacios. Máx 20 caracteres.
+                       autocomplete="off"
+                       spellcheck="false"
+                       class="aqua-pulse">
+                <div class="username-rules">
+                    Solo letras, números y espacios. Máximo 20 caracteres.
+                </div>
+            </div>
+            
+            <!-- Solo color aqua fijo -->
+            <div style="margin: 20px 0; padding: 15px; background: rgba(0, 255, 255, 0.05); border-radius: 10px;">
+                <p style="color: #00ffff; margin: 0; font-size: 14px;">
+                    🎨 <strong>Color de usuario:</strong> <span style="color: #00ffff; font-weight: bold;">AQUA</span>
                 </p>
-            </div>
-            
-            <!-- Selector de avatar simple -->
-            <div class="user-avatar-selector">
-                <div class="avatar-option" style="background: #800080;" onclick="selectAvatar('#800080')"></div>
-                <div class="avatar-option" style="background: #008080;" onclick="selectAvatar('#008080')"></div>
-                <div class="avatar-option" style="background: #800000;" onclick="selectAvatar('#800000')"></div>
-                <div class="avatar-option" style="background: #000080;" onclick="selectAvatar('#000080')"></div>
-                <div class="avatar-option" style="background: #008000;" onclick="selectAvatar('#008000')"></div>
-            </div>
-            
-            <!-- Usuarios rápidos sugeridos -->
-            <div class="quick-users">
-                <button class="quick-user-btn" onclick="setQuickUser('Anónimo')">Anónimo</button>
-                <button class="quick-user-btn" onclick="setQuickUser('Visitante')">Visitante</button>
-                <button class="quick-user-btn" onclick="setQuickUser('Usuario')">Usuario</button>
-                <button class="quick-user-btn" onclick="setQuickUser('Invitado')">Invitado</button>
+                <div style="width: 100%; height: 30px; background: linear-gradient(90deg, #003333 0%, #00aaaa 50%, #00ffff 100%); border-radius: 5px; margin-top: 10px;"></div>
             </div>
             
             <div class="user-warning">
-                <p style="color: #ff4444; margin: 0; font-size: 14px;">
-                    ⚠️ <strong>NOTA:</strong> Tu nombre de usuario será visible para todos.
-                    Tu actividad será registrada y monitoreada por seguridad.
+                <p style="color: #00ffff; margin: 0; font-size: 14px;">
+                    ⚠️ Tu actividad será registrada y visible públicamente
                 </p>
             </div>
             
-            <button class="enter-btn" onclick="enterForum()">
-                🚀 ENTRAR AL FORO
+            <button class="enter-btn" onclick="enterForum()" id="enterButton">
+                🔥 ENTRAR AL FORO
             </button>
             
-            <div style="margin-top: 20px; color: #666; font-size: 12px;">
-                <p>Presiona ENTER para continuar rápidamente</p>
+            <div class="auto-enter">
+                Presiona ENTER para continuar rápidamente
             </div>
         </div>
     </div>
@@ -222,13 +203,12 @@
     
     <!-- Script para usuario obligatorio -->
     <script>
-    let selectedAvatarColor = '#800080';
-    
     document.addEventListener('DOMContentLoaded', function() {
         // Verificar si ya hay un usuario guardado
         const savedUser = localStorage.getItem('hmfbUsername');
         const userWall = document.getElementById('userWall');
         const mainContent = document.getElementById('mainContent');
+        const usernameInput = document.getElementById('usernameInput');
         
         if (savedUser) {
             // Usuario ya existe, ocultar muro
@@ -246,54 +226,58 @@
             
             // Enfocar input automáticamente
             setTimeout(() => {
-                document.getElementById('usernameInput').focus();
+                usernameInput.focus();
             }, 300);
         }
         
         // Permitir ENTER para enviar
-        document.getElementById('usernameInput').addEventListener('keypress', function(e) {
+        usernameInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 enterForum();
             }
         });
-    });
-    
-    function selectAvatar(color) {
-        selectedAvatarColor = color;
         
-        // Actualizar selección visual
-        document.querySelectorAll('.avatar-option').forEach(avatar => {
-            avatar.classList.remove('selected');
+        // Auto-rellenar si hay texto seleccionado del portapapeles
+        usernameInput.addEventListener('paste', function(e) {
+            setTimeout(() => {
+                this.value = this.value.trim().substring(0, 20);
+            }, 10);
         });
-        event.target.classList.add('selected');
-    }
-    
-    function setQuickUser(username) {
-        document.getElementById('usernameInput').value = username;
-        document.getElementById('usernameInput').focus();
-    }
+    });
     
     function enterForum() {
         const usernameInput = document.getElementById('usernameInput');
         let username = usernameInput.value.trim();
         
         if (!username) {
-            username = 'Anónimo';
+            alert("⚠️ Debes ingresar un nombre para continuar");
+            usernameInput.focus();
+            return;
         }
         
         // Limpiar y limitar username
         username = username.substring(0, 20);
-        username = username.replace(/[^\w\s]/gi, '');
+        username = username.replace(/[^\w\sáéíóúÁÉÍÓÚñÑ]/gi, '');
+        
+        if (!username) {
+            alert("⚠️ El nombre no puede estar vacío");
+            usernameInput.focus();
+            return;
+        }
+        
+        // Color fijo para usuarios normales: AQUA
+        const userColor = '#00ffff';
         
         // Guardar usuario en localStorage
         const userData = {
             username: username,
-            avatarColor: selectedAvatarColor,
+            avatarColor: userColor, // Siempre aqua para usuarios normales
             joinDate: new Date().toISOString(),
             lastSeen: new Date().toISOString(),
-            role: 'user',
+            role: 'user', // Todos son usuarios normales por defecto
             postsCount: 0,
-            likesCount: 0
+            likesCount: 0,
+            isAquaUser: true // Marcar como usuario aqua
         };
         
         localStorage.setItem('hmfbUsername', username);
@@ -304,8 +288,9 @@
             userId: Date.now(),
             username: username,
             role: 'user',
-            avatarColor: selectedAvatarColor,
-            loginTime: new Date().toISOString()
+            avatarColor: userColor,
+            loginTime: new Date().toISOString(),
+            displayName: username // Nombre normal para usuarios
         };
         
         localStorage.setItem('currentSession', JSON.stringify(session));
@@ -320,7 +305,7 @@
             
             // Mostrar mensaje de bienvenida
             setTimeout(() => {
-                alert(`🎉 ¡Bienvenido al HMFB Forum, ${username}!\n\nAhora puedes ver todo el contenido y comentar.`);
+                alert(`🎉 ¡Bienvenido al HMFB Forum, ${username}!\n\nColor de usuario: 🔵 AQUA`);
             }, 500);
         }
         
@@ -334,7 +319,7 @@
     
     // Modificar función logout para volver a pedir usuario
     window.logout = function() {
-        if (confirm("¿Cerrar sesión?\n\nVolverás a la pantalla de selección de usuario.")) {
+        if (confirm("¿Cerrar sesión?\n\nVolverás a la pantalla de identificación.")) {
             // Limpiar datos de usuario
             localStorage.removeItem('hmfbUsername');
             localStorage.removeItem('hmfbUserData');
@@ -347,17 +332,10 @@
             // Reiniciar input
             document.getElementById('usernameInput').value = '';
             document.getElementById('usernameInput').focus();
-            
-            // Resetear avatares
-            selectedAvatarColor = '#800080';
-            document.querySelectorAll('.avatar-option').forEach((avatar, index) => {
-                avatar.classList.remove('selected');
-                if (index === 0) avatar.classList.add('selected');
-            });
         }
     };
     
-    // Función para cambiar usuario (disponible en panel)
+    // Función para cambiar usuario
     window.changeUsername = function() {
         if (confirm("¿Cambiar nombre de usuario?\n\nSeleccionarás un nuevo nombre.")) {
             localStorage.removeItem('hmfbUsername');
