@@ -3,41 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HMFB Forums - Comunidad</title>
+    <title>HMFB Forum - Comunidad</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png">
 </head>
 <body>
-    <!-- Script de IP sigue funcionando -->
+    <!-- Script de IP mejorado -->
     <script defer src="script.js"></script>
     
     <div class="forum-container">
         <!-- Header del Foro -->
         <div class="forum-header">
-            <h1>🎮 HMFB Forums</h1>
-            <p>Comunidad exclusiva para compartir contenido y discusiones</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
+                <img src="https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png" 
+                     alt="HMFB Logo" 
+                     style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #800080;">
+                <div>
+                    <h1>🔥 HMFB Forum</h1>
+                    <p>Comunidad exclusiva • Solo admins pueden crear posts</p>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <div style="display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                    <span style="background: rgba(128, 0, 128, 0.2); padding: 5px 15px; border-radius: 20px; font-size: 14px;">📢 Anuncios Oficiales</span>
+                    <span style="background: rgba(128, 0, 128, 0.2); padding: 5px 15px; border-radius: 20px; font-size: 14px;">🛡️ Solo Admins Post</span>
+                    <span style="background: rgba(128, 0, 128, 0.2); padding: 5px 15px; border-radius: 20px; font-size: 14px;">💬 Todos Comentan</span>
+                </div>
+            </div>
         </div>
         
         <!-- Controles de Usuario -->
         <div class="user-controls">
             <div id="guestControls">
-                <button class="btn btn-primary" onclick="showModal('loginModal')">Iniciar Sesión</button>
-                <button class="btn btn-secondary" onclick="showModal('registerModal')">Registrarse</button>
+                <div>
+                    <strong style="color: #800080;">¡Bienvenido!</strong>
+                    <p style="color: #888; margin: 5px 0; font-size: 14px;">Regístrate para comentar y like</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" onclick="showModal('loginModal')">
+                        <span style="font-size: 18px;">🔑</span> Iniciar Sesión
+                    </button>
+                    <button class="btn btn-secondary" onclick="showModal('registerModal')">
+                        <span style="font-size: 18px;">📝</span> Registrarse
+                    </button>
+                </div>
             </div>
             
             <div id="userControls" style="display: none;">
                 <div class="user-info">
                     <div class="user-avatar" id="userAvatar">U</div>
                     <div>
-                        <strong id="usernameDisplay">Usuario</strong>
+                        <strong id="usernameDisplay" style="color: #800080;">Usuario</strong>
                         <div id="userRoleBadge" class="role-badge user-badge">USUARIO</div>
+                        <small style="color: #666; font-size: 12px;" id="userSince"></small>
                     </div>
                 </div>
-                <button class="btn btn-secondary" onclick="logout()">Cerrar Sesión</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="showUserProfile()" title="Ver perfil">
+                        <span style="font-size: 16px;">👤</span> Perfil
+                    </button>
+                    <button class="btn btn-secondary" onclick="logout()" title="Cerrar sesión">
+                        <span style="font-size: 16px;">🚪</span> Salir
+                    </button>
+                </div>
             </div>
             
             <div id="adminControls" style="display: none;">
-                <button class="btn btn-primary" onclick="showModal('createPostModal')">+ Nuevo Post</button>
-                <button class="btn btn-secondary" onclick="showModal('adminPanelModal')">Panel Admin</button>
+                <div class="user-info">
+                    <div class="user-avatar" id="adminAvatar" style="background: #ff0000; border: 2px solid gold;">A</div>
+                    <div>
+                        <strong id="adminUsername" style="color: #ff0000;">Admin</strong>
+                        <div class="role-badge admin-badge">👑 ADMINISTRADOR</div>
+                        <small style="color: #666; font-size: 12px;">Control total del foro</small>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" onclick="showModal('createPostModal')">
+                        <span style="font-size: 18px;">📝</span> Crear Post
+                    </button>
+                    <button class="btn btn-secondary" onclick="showModal('adminPanelModal')">
+                        <span style="font-size: 18px;">⚙️</span> Panel Admin
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -45,50 +92,102 @@
         <div class="stats">
             <div class="stat-card">
                 <div class="stat-number" id="totalPosts">0</div>
-                <div class="stat-label">Posts Totales</div>
+                <div class="stat-label">📝 Posts Totales</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number" id="totalUsers">0</div>
-                <div class="stat-label">Usuarios</div>
+                <div class="stat-label">👥 Usuarios</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number" id="onlineUsers">0</div>
-                <div class="stat-label">Usuarios Online</div>
+                <div class="stat-label">🟢 Usuarios Online</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalComments">0</div>
+                <div class="stat-label">💬 Comentarios</div>
             </div>
         </div>
         
         <!-- Categorías -->
         <div class="categories">
-            <div class="category-card">
-                <h3>📢 Anuncios</h3>
-                <p>Noticias oficiales y actualizaciones</p>
+            <div class="category-card" onclick="filterPosts('announcements')" style="cursor: pointer;">
+                <h3>📢 Anuncios Oficiales</h3>
+                <p>Noticias importantes y actualizaciones del staff</p>
+                <small style="color: #800080;">Solo administradores</small>
             </div>
-            <div class="category-card">
+            <div class="category-card" onclick="filterPosts('general')" style="cursor: pointer;">
                 <h3>💬 General</h3>
                 <p>Discusión general y temas diversos</p>
+                <small style="color: #888;">Todos pueden comentar</small>
             </div>
-            <div class="category-card">
+            <div class="category-card" onclick="filterPosts('multimedia')" style="cursor: pointer;">
                 <h3>🖼️ Multimedia</h3>
-                <p>Comparte imágenes y capturas</p>
+                <p>Comparte imágenes, capturas y videos</p>
+                <small style="color: #888;">Contenido visual</small>
             </div>
-            <div class="category-card">
+            <div class="category-card" onclick="filterPosts('gaming')" style="cursor: pointer;">
                 <h3>🎮 Gaming</h3>
-                <p>Discusión sobre videojuegos</p>
+                <p>Discusión sobre videojuegos y gaming</p>
+                <small style="color: #888;">Comunidad gamer</small>
+            </div>
+        </div>
+        
+        <!-- Filtros y Búsqueda -->
+        <div style="background: #2a2a2a; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <button class="btn btn-secondary" style="padding: 8px 15px;" onclick="filterPosts('all')">Todos</button>
+                <button class="btn btn-secondary" style="padding: 8px 15px;" onclick="filterPosts('announcements')">Anuncios</button>
+                <button class="btn btn-secondary" style="padding: 8px 15px;" onclick="filterPosts('general')">General</button>
+                <button class="btn btn-secondary" style="padding: 8px 15px;" onclick="filterPosts('multimedia')">Multimedia</button>
+                <button class="btn btn-secondary" style="padding: 8px 15px;" onclick="filterPosts('gaming')">Gaming</button>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="searchPosts" placeholder="Buscar posts..." style="padding: 8px 15px; background: #333; border: 1px solid #444; color: white; border-radius: 5px; width: 200px;">
+                <button class="btn btn-secondary" onclick="searchPosts()">🔍 Buscar</button>
             </div>
         </div>
         
         <!-- Lista de Posts -->
         <div class="posts-container">
-            <h2>📝 Posts Recientes</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>📝 Posts Recientes</h2>
+                <div style="color: #888; font-size: 14px;">
+                    Ordenar por: 
+                    <select id="sortPosts" onchange="sortPosts()" style="background: #333; color: white; border: 1px solid #444; padding: 5px; border-radius: 5px;">
+                        <option value="newest">Más nuevos</option>
+                        <option value="oldest">Más antiguos</option>
+                        <option value="mostLiked">Más likes</option>
+                        <option value="mostComments">Más comentarios</option>
+                    </select>
+                </div>
+            </div>
             <div id="postsList">
                 <!-- Los posts se cargarán aquí -->
-                <p class="loading-text">Cargando posts...</p>
+                <div class="loading-post">
+                    <div class="loading-shimmer"></div>
+                    <div class="loading-shimmer" style="width: 70%;"></div>
+                    <div class="loading-shimmer" style="width: 50%;"></div>
+                </div>
+            </div>
+            <div id="noPostsMessage" style="display: none; text-align: center; padding: 40px;">
+                <h3 style="color: #888;">😕 No hay posts todavía</h3>
+                <p style="color: #666;">Los administradores crearán contenido pronto</p>
+            </div>
+        </div>
+        
+        <!-- Posts Populares -->
+        <div class="posts-container" style="margin-top: 30px;">
+            <h2>🔥 Posts Populares</h2>
+            <div id="popularPosts">
+                <!-- Posts populares se cargarán aquí -->
             </div>
         </div>
     </div>
     
     <!-- Botón flotante para crear post (solo admin) -->
-    <button class="create-post-btn" id="floatCreateBtn" style="display: none;" onclick="showModal('createPostModal')">+</button>
+    <button class="create-post-btn" id="floatCreateBtn" style="display: none;" onclick="showModal('createPostModal')">
+        <span style="font-size: 30px;">✏️</span>
+    </button>
     
     <!-- MODALES -->
     
@@ -96,21 +195,29 @@
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Iniciar Sesión</h2>
+                <h2>🔑 Iniciar Sesión</h2>
                 <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
             </div>
             <div class="form-group">
-                <label>Usuario</label>
-                <input type="text" id="loginUsername" placeholder="Tu nombre de usuario">
+                <label>Usuario o Email</label>
+                <input type="text" id="loginUsername" placeholder="Tu usuario o email">
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
                 <input type="password" id="loginPassword" placeholder="Tu contraseña">
+                <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">
+                    Admin: ubz / HMFB
+                </small>
             </div>
             <div id="loginError" class="error-message">
                 Usuario o contraseña incorrectos
             </div>
-            <button class="btn btn-primary" onclick="login()">Entrar</button>
+            <button class="btn btn-primary" onclick="login()" style="width: 100%; padding: 12px; font-size: 16px;">
+                🚪 Entrar al Foro
+            </button>
+            <div style="text-align: center; margin-top: 15px;">
+                <small style="color: #888;">¿Primera vez? <a href="#" onclick="closeModal('loginModal'); showModal('registerModal');" style="color: #800080;">Regístrate aquí</a></small>
+            </div>
         </div>
     </div>
     
@@ -118,12 +225,12 @@
     <div id="registerModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Registrarse</h2>
+                <h2>📝 Registrarse</h2>
                 <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
             </div>
             <div class="form-group">
-                <label>Usuario</label>
-                <input type="text" id="registerUsername" placeholder="Elige un nombre de usuario">
+                <label>Nombre de Usuario</label>
+                <input type="text" id="registerUsername" placeholder="Elige un nombre único">
             </div>
             <div class="form-group">
                 <label>Email</label>
@@ -137,8 +244,18 @@
                 <label>Confirmar Contraseña</label>
                 <input type="password" id="registerConfirmPassword" placeholder="Repite tu contraseña">
             </div>
+            <div style="background: rgba(128, 0, 128, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                <small style="color: #888;">
+                    ⚠️ Al registrarte aceptas que tu actividad sea monitoreada por seguridad
+                </small>
+            </div>
             <div id="registerError" class="error-message"></div>
-            <button class="btn btn-primary" onclick="register()">Crear Cuenta</button>
+            <button class="btn btn-primary" onclick="register()" style="width: 100%; padding: 12px; font-size: 16px;">
+                ✅ Crear Cuenta
+            </button>
+            <div style="text-align: center; margin-top: 15px;">
+                <small style="color: #888;">¿Ya tienes cuenta? <a href="#" onclick="closeModal('registerModal'); showModal('loginModal');" style="color: #800080;">Inicia sesión</a></small>
+            </div>
         </div>
     </div>
     
@@ -146,21 +263,21 @@
     <div id="createPostModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Crear Nuevo Post</h2>
+                <h2>📝 Crear Nuevo Post</h2>
                 <button class="close-modal" onclick="closeModal('createPostModal')">&times;</button>
             </div>
             <div class="form-group">
-                <label>Título</label>
-                <input type="text" id="postTitle" placeholder="Título del post">
+                <label>Título del Post</label>
+                <input type="text" id="postTitle" placeholder="¿De qué quieres hablar?">
             </div>
             <div class="form-group">
                 <label>Contenido</label>
-                <textarea id="postContent" placeholder="Escribe tu contenido aquí..."></textarea>
+                <textarea id="postContent" placeholder="Escribe tu contenido aquí..." rows="6"></textarea>
             </div>
             <div class="form-group">
                 <label>Categoría</label>
                 <select id="postCategory">
-                    <option value="announcements">📢 Anuncios</option>
+                    <option value="announcements">📢 Anuncios Oficiales</option>
                     <option value="general">💬 General</option>
                     <option value="multimedia">🖼️ Multimedia</option>
                     <option value="gaming">🎮 Gaming</option>
@@ -169,38 +286,84 @@
             <div class="form-group">
                 <label>Imagen (opcional)</label>
                 <div class="file-upload" onclick="document.getElementById('postImage').click()">
-                    Haz clic para subir imagen
+                    📸 Haz clic para subir imagen
                 </div>
                 <input type="file" id="postImage" accept="image/*" style="display: none;" onchange="previewImage(this)">
                 <div class="image-preview" id="imagePreview"></div>
             </div>
             <div id="createPostError" class="error-message"></div>
-            <button class="btn btn-primary" onclick="createPost()">Publicar Post</button>
+            <button class="btn btn-primary" onclick="createPost()" style="width: 100%; padding: 12px; font-size: 16px;">
+                🚀 Publicar Post
+            </button>
         </div>
     </div>
     
     <!-- Modal Panel Admin -->
     <div id="adminPanelModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 800px;">
             <div class="modal-header">
-                <h2>Panel de Administración</h2>
+                <h2>⚙️ Panel de Administración</h2>
                 <button class="close-modal" onclick="closeModal('adminPanelModal')">&times;</button>
             </div>
             
-            <div style="margin-bottom: 20px;">
-                <h3>Gestión de Usuarios</h3>
-                <div id="adminUsersList" class="scroll-container">
+            <div class="tab-container" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="tab-btn active" onclick="switchAdminTab('users')">👥 Usuarios</button>
+                <button class="tab-btn" onclick="switchAdminTab('posts')">📝 Posts</button>
+                <button class="tab-btn" onclick="switchAdminTab('stats')">📊 Estadísticas</button>
+                <button class="tab-btn" onclick="switchAdminTab('logs')">📋 Logs</button>
+            </div>
+            
+            <div id="adminUsersTab" class="admin-tab">
+                <h3>👥 Gestión de Usuarios</h3>
+                <div id="adminUsersList" class="scroll-container" style="max-height: 400px;">
                     <!-- Lista de usuarios -->
                 </div>
             </div>
             
-            <div>
-                <h3>Estadísticas</h3>
-                <div class="info-card">
-                    <p>Total de usuarios registrados: <strong id="adminTotalUsers">0</strong></p>
-                    <p>Total de posts: <strong id="adminTotalPosts">0</strong></p>
-                    <p>Tu rol: <span class="role-badge admin-badge">ADMINISTRADOR</span></p>
+            <div id="adminPostsTab" class="admin-tab" style="display: none;">
+                <h3>📝 Gestión de Posts</h3>
+                <div id="adminPostsList" class="scroll-container" style="max-height: 400px;">
+                    <!-- Lista de posts para admin -->
                 </div>
+            </div>
+            
+            <div id="adminStatsTab" class="admin-tab" style="display: none;">
+                <h3>📊 Estadísticas Detalladas</h3>
+                <div class="info-card">
+                    <p><strong>Total de usuarios registrados:</strong> <span id="adminTotalUsers">0</span></p>
+                    <p><strong>Total de posts:</strong> <span id="adminTotalPosts">0</span></p>
+                    <p><strong>Total de comentarios:</strong> <span id="adminTotalComments">0</span></p>
+                    <p><strong>Usuarios online ahora:</strong> <span id="adminOnlineUsers">0</span></p>
+                    <p><strong>Tu rol:</strong> <span class="role-badge admin-badge">👑 ADMINISTRADOR</span></p>
+                    <p><strong>Tu ID:</strong> <code id="adminUserId">-</code></p>
+                </div>
+            </div>
+            
+            <div id="adminLogsTab" class="admin-tab" style="display: none;">
+                <h3>📋 Logs de Actividad</h3>
+                <div class="info-card">
+                    <p><strong>Último login:</strong> <span id="lastLoginTime">-</span></p>
+                    <p><strong>Posts creados por ti:</strong> <span id="yourPostsCount">0</span></p>
+                    <p><strong>Versión del foro:</strong> HMFB Forum v1.0</p>
+                    <p><strong>Estado del sistema:</strong> <span style="color: #00cc00;">● Operativo</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Comentarios -->
+    <div id="commentsModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2 id="commentsPostTitle">💬 Comentarios</h2>
+                <button class="close-modal" onclick="closeModal('commentsModal')">&times;</button>
+            </div>
+            <div id="commentsList" class="scroll-container" style="max-height: 400px; margin-bottom: 20px;">
+                <!-- Comentarios se cargarán aquí -->
+            </div>
+            <div class="form-group">
+                <textarea id="newComment" placeholder="Escribe tu comentario..." rows="3"></textarea>
+                <button class="btn btn-primary" onclick="addComment()" style="width: 100%;">💬 Enviar Comentario</button>
             </div>
         </div>
     </div>
@@ -210,8 +373,127 @@
     
     <!-- Footer -->
     <footer>
-        © 2025 HMFB Forums - Todos los derechos reservados<br>
-        <small>Comunidad exclusiva HMFB</small>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h3 style="color: #800080; margin-bottom: 10px;">🔥 HMFB Forum</h3>
+                    <p style="color: #888; margin: 0;">Comunidad exclusiva para contenido de calidad</p>
+                </div>
+                <div>
+                    <p style="color: #666; font-size: 12px;">
+                        © 2025 HMFB Forum - Todos los derechos reservados<br>
+                        <small>Solo administradores pueden crear posts</small>
+                    </p>
+                </div>
+                <div>
+                    <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 12px;" onclick="showModal('loginModal')">
+                        Staff Login
+                    </button>
+                </div>
+            </div>
+            <hr style="border-color: #333; margin: 20px 0;">
+            <div style="text-align: center; color: #666; font-size: 12px;">
+                <p>⚠️ Este foro está protegido y monitoreado. Toda actividad es registrada.</p>
+                <p>Al usar este sitio aceptas nuestros términos y condiciones.</p>
+            </div>
+        </div>
     </footer>
+    
+    <!-- Script adicional para mejoras -->
+    <script>
+    // Funciones adicionales para el foro mejorado
+    function showUserProfile() {
+        const session = JSON.parse(localStorage.getItem('currentSession'));
+        if (session) {
+            alert(`👤 Perfil de ${session.username}\n\n🏷️ Rol: ${session.role === 'admin' ? 'Administrador' : 'Usuario'}\n🆔 ID: ${session.userId}\n📅 Registrado: Ver panel admin`);
+        }
+    }
+    
+    function filterPosts(category) {
+        // Esta función será implementada en forum-script.js
+        console.log('Filtrando posts por:', category);
+        // Por ahora, recargar todos los posts
+        if (typeof forum !== 'undefined') {
+            forum.loadPosts();
+        }
+    }
+    
+    function searchPosts() {
+        const query = document.getElementById('searchPosts').value;
+        if (query.trim()) {
+            alert(`Buscando: "${query}"\n\nEsta función estará disponible en la próxima actualización.`);
+        }
+    }
+    
+    function sortPosts() {
+        const sortBy = document.getElementById('sortPosts').value;
+        alert(`Ordenando por: ${sortBy}\n\nEsta función estará disponible en la próxima actualización.`);
+    }
+    
+    function switchAdminTab(tabName) {
+        // Ocultar todas las pestañas
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.style.display = 'none';
+        });
+        
+        // Desactivar todos los botones
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Mostrar pestaña seleccionada
+        document.getElementById(`admin${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Tab`).style.display = 'block';
+        
+        // Activar botón
+        event.target.classList.add('active');
+        
+        // Si es la pestaña de usuarios, cargarlos
+        if (tabName === 'users' && typeof forum !== 'undefined') {
+            forum.loadAdminUsers();
+        }
+    }
+    
+    // Estilos para las pestañas del admin
+    document.addEventListener('DOMContentLoaded', function() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .tab-btn {
+                padding: 10px 20px;
+                background: #333;
+                color: #888;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+            .tab-btn.active {
+                background: #800080;
+                color: white;
+            }
+            .tab-btn:hover {
+                background: #444;
+            }
+            .loading-post {
+                background: #2a2a2a;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 15px;
+            }
+            .loading-shimmer {
+                background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite;
+                height: 15px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+            }
+            @keyframes shimmer {
+                0% { background-position: -200px 0; }
+                100% { background-position: 200px 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    });
+    </script>
 </body>
 </html>
