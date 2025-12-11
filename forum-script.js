@@ -121,7 +121,6 @@ class HMFBForum {
         
         // Actualizar controles de usuario
         const userControls = document.getElementById('userControls');
-        const guestControls = document.getElementById('guestControls');
         
         if (userControls) {
             userControls.style.display = 'flex';
