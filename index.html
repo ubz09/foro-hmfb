@@ -72,6 +72,338 @@
         .hidden {
             display: none !important;
         }
+        
+        /* Estilos del foro */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+        }
+        
+        /* Navegación */
+        .forum-nav {
+            background: #1a1a1a;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ffff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-title {
+            color: #00ffff;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-title::before {
+            content: "🔥";
+        }
+        
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-button {
+            background: #00aaaa;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .nav-button:hover {
+            background: #00cccc;
+            transform: translateY(-2px);
+        }
+        
+        .logout-btn {
+            background: #ff4444 !important;
+        }
+        
+        .logout-btn:hover {
+            background: #ff6666 !important;
+        }
+        
+        .username-display {
+            color: #00ffff;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background: rgba(0, 170, 170, 0.1);
+        }
+        
+        /* Contenedor principal */
+        .forum-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 25px;
+            height: fit-content;
+            border: 1px solid #333;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-title {
+            color: #00ffff;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-item {
+            margin-bottom: 10px;
+        }
+        
+        .category-link {
+            color: #b4b4b4;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .category-link:hover {
+            background: #333;
+            color: #00ffff;
+            padding-left: 15px;
+        }
+        
+        .online-users {
+            color: #4CAF50;
+            font-size: 14px;
+            padding: 5px;
+        }
+        
+        /* Área principal */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+        
+        .content-title {
+            color: white;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .create-post-btn {
+            background: linear-gradient(135deg, #800080 0%, #990099 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .create-post-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(128, 0, 128, 0.3);
+        }
+        
+        /* Posts */
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .post {
+            background: #2a2a2a;
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+        
+        .post:hover {
+            border-color: #00aaaa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .author-info strong {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .post-date {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .post h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .post-content {
+            color: #b4b4b4;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+        
+        .post-category {
+            background: #333;
+            color: #00aaaa;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+        
+        /* No posts message */
+        .no-posts {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+            background: #2a2a2a;
+            border-radius: 10px;
+            border: 1px dashed #333;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .forum-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .forum-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .nav-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .post-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -95,10 +427,95 @@
 
     <!-- Contenido del Foro (inicialmente oculto) -->
     <div id="forumContent" class="hidden">
-        <!-- Aquí va TODO tu código del foro que ya tenías -->
-        <!-- MANTÉN TODO EL HTML DEL FORO DENTRO DE ESTE DIV -->
-        <h1>HMFB Forum Cargado...</h1>
-        <!-- Pega aquí todo tu HTML del foro -->
+        <!-- Barra de navegación -->
+        <nav class="forum-nav">
+            <div class="nav-title">
+                HMFB FORUM
+            </div>
+            
+            <div class="nav-controls">
+                <!-- Controles para invitados (login) -->
+                <div id="guestControls" style="display: none;">
+                    <button onclick="location.reload()" class="nav-button">
+                        Iniciar Sesión
+                    </button>
+                </div>
+                
+                <!-- Controles para usuarios logueados -->
+                <div id="userControls" style="display: none; align-items: center; gap: 15px;">
+                    <span id="usernameDisplay" class="username-display"></span>
+                    <button onclick="logout()" class="nav-button logout-btn">
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenedor principal -->
+        <div class="forum-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">📌 Categorías</h3>
+                    <ul class="category-list">
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>📢</span> Anuncios
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>💬</span> General
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>🖼️</span> Multimedia
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>❓</span> Soporte
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">👥 Usuarios Online</h3>
+                    <div id="onlineUsers" class="online-users">
+                        Cargando usuarios...
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">📊 Estadísticas</h3>
+                    <div style="color: #b4b4b4; font-size: 14px;">
+                        <div style="margin-bottom: 8px;">📝 <strong id="postsCount">0</strong> Publicaciones</div>
+                        <div style="margin-bottom: 8px;">👤 <strong id="usersCount">0</strong> Usuarios</div>
+                        <div>🔥 <strong>1</strong> Administrador</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Área principal -->
+            <main class="main-content">
+                <!-- Encabezado -->
+                <div class="content-header">
+                    <h2 class="content-title">📝 Publicaciones Recientes</h2>
+                    <button id="createPostBtn" class="create-post-btn" style="display: none;">
+                        <span>+</span> Crear Nueva Publicación
+                    </button>
+                </div>
+                
+                <!-- Lista de posts -->
+                <div class="posts-container">
+                    <div id="postsList">
+                        <!-- Los posts se cargarán aquí con JavaScript -->
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <!-- Scripts -->
@@ -211,6 +628,20 @@
             location.reload();
         }
     };
+    
+    // Mostrar/ocultar botón de crear post para admin
+    document.addEventListener('DOMContentLoaded', function() {
+        const session = JSON.parse(localStorage.getItem('currentSession'));
+        const createPostBtn = document.getElementById('createPostBtn');
+        
+        if (session && session.role === 'admin' && createPostBtn) {
+            createPostBtn.style.display = 'flex';
+            createPostBtn.onclick = function() {
+                // Aquí puedes agregar la lógica para crear posts
+                alert('Función de crear posts para admin - En desarrollo');
+            };
+        }
+    });
     </script>
 </body>
 </html>
