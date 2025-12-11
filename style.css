@@ -847,3 +847,31 @@ hr {
     border: 1px solid #008080;
     color: #008080;
 }
+/* Estilos adicionales para elementos específicos */
+.loading-text {
+    color: #888;
+    text-align: center;
+    padding: 40px;
+    font-style: italic;
+}
+
+.scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Mejora en los modales */
+.modal-content .btn-primary {
+    margin-top: 20px;
+}
+
+/* Asegurar que los botones dentro de modales no sean 100% */
+.modal-content .btn {
+    width: auto;
+}
