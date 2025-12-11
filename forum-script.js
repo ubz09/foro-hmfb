@@ -1,37 +1,87 @@
-// Modificar la clase ELKForum para usar usuario simple
+// En la función loadPosts() de forum-script.js, modificar la parte que muestra el autor:
 
-init() {
-    // Verificar si hay usuario
-    const username = localStorage.getItem('hmfbUsername');
-    if (!username) {
-        console.log("Esperando que el usuario ingrese nombre...");
-        return; // No inicializar hasta que haya usuario
+// Buscar esta sección en loadPosts() y modificar:
+html += `
+    <div class="post" data-post-id="${post.id}">
+        <div class="post-header">
+            <div class="post-author">
+                <div class="user-avatar" style="background: ${post.authorRole === 'admin' ? '#800080' : '#00ffff'};">
+                    ${post.author.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                    <strong style="color: ${post.authorRole === 'admin' ? '#800080' : '#00ffff'};">${post.authorRole === 'admin' ? '[Admin] ' : ''}${post.author}</strong>
+                    <span class="role-badge ${post.authorRole === 'admin' ? 'admin-badge' : 'user-badge'}">
+                        ${post.authorRole === 'admin' ? 'ADMIN' : 'USUARIO'}
+                    </span>
+                </div>
+            </div>
+            <div class="post-date">
+                ${categoryIcon} ${timeAgo}
+            </div>
+        </div>
+        <h3 style="color: #aaaaaa; margin: 10px 0;">${post.title}</h3>
+        <div class="post-content">${this.formatContent(post.content)}</div>
+        
+        ${post.image ? `
+            <img src="${post.image}" class="post-image" alt="Imagen del post">
+        ` : ''}
+        
+        <div class="post-actions">
+            <button onclick="forum.likePost(${post.id})">
+                👍 Like (${post.likes || 0})
+            </button>
+            <button onclick="showCommentModal(${post.id})">
+                💬 Comentar (${post.comments ? post.comments.length : 0})
+            </button>
+            ${this.getCurrentSession() && this.getCurrentSession().role === 'admin' ? `
+                <button style="color: #ff4444;" onclick="forum.deletePost(${post.id})">
+                    🗑️ Eliminar
+                </button>
+            ` : ''}
+        </div>
+`;
+
+// También modificar la función updateUserControls() para mostrar admins en violeta:
+updateUserControls() {
+    const session = this.getCurrentSession();
+    const guestControls = document.getElementById('guestControls');
+    const userControls = document.getElementById('userControls');
+    const adminControls = document.getElementById('adminControls');
+    const floatCreateBtn = document.getElementById('floatCreateBtn');
+    
+    if (session) {
+        guestControls.style.display = 'none';
+        userControls.style.display = 'flex';
+        
+        document.getElementById('usernameDisplay').textContent = session.role === 'admin' ? `[Admin] ${session.username}` : session.username;
+        document.getElementById('usernameDisplay').style.color = session.role === 'admin' ? '#800080' : '#00ffff';
+        document.getElementById('userAvatar').textContent = session.username.charAt(0).toUpperCase();
+        document.getElementById('userAvatar').style.background = session.role === 'admin' ? '#800080' : '#00ffff';
+        
+        const roleBadge = document.getElementById('userRoleBadge');
+        roleBadge.textContent = session.role === 'admin' ? 'ADMIN' : 'USUARIO';
+        roleBadge.className = `role-badge ${session.role === 'admin' ? 'admin-badge' : 'user-badge'}`;
+        
+        if (session.role === 'admin') {
+            adminControls.style.display = 'flex';
+            if (floatCreateBtn) floatCreateBtn.style.display = 'block';
+            
+            // Estilo especial para admin
+            document.querySelector('.user-avatar').style.border = '2px solid gold';
+            document.querySelector('.user-avatar').style.boxShadow = '0 0 10px gold';
+        } else {
+            adminControls.style.display = 'none';
+            if (floatCreateBtn) floatCreateBtn.style.display = 'none';
+        }
+    } else {
+        guestControls.style.display = 'block';
+        userControls.style.display = 'none';
+        adminControls.style.display = 'none';
+        if (floatCreateBtn) floatCreateBtn.style.display = 'none';
     }
-    
-    // Inicializar datos si no existen
-    if (!localStorage.getItem('forumUsers')) {
-        this.initializeDefaultData();
-    }
-    
-    // Asegurar que el usuario actual esté en la lista
-    this.ensureCurrentUserExists();
-    
-    // Actualizar controles de usuario
-    this.updateUserControls();
-    
-    // Cargar posts
-    this.loadPosts();
-    
-    // Actualizar estadísticas
-    this.updateStats();
-    
-    // Actualizar cada 30 segundos para usuarios online
-    setInterval(() => this.updateOnlineUsers(), 30000);
-    
-    // Actualizar último visto
-    setInterval(() => this.updateLastSeen(), 60000);
 }
 
+// Modificar la función ensureCurrentUserExists() para asignar color aqua por defecto:
 ensureCurrentUserExists() {
     const username = localStorage.getItem('hmfbUsername');
     const userDataStr = localStorage.getItem('hmfbUserData');
@@ -48,15 +98,16 @@ ensureCurrentUserExists() {
             id: Date.now(),
             username: username,
             email: `${username.toLowerCase()}@hmfb.forum`,
-            password: this.hashPassword(username), // Password simple basado en username
-            role: userData.role || 'user',
-            avatarColor: userData.avatarColor || '#800080',
+            password: this.hashPassword(username),
+            role: 'user', // Siempre usuario normal al registrarse
+            avatarColor: '#00ffff', // Color aqua fijo para usuarios normales
             registered: userData.joinDate || new Date().toISOString(),
             lastLogin: new Date().toISOString(),
             lastSeen: new Date().toISOString(),
             postsCount: 0,
             likesCount: 0,
-            commentsCount: 0
+            commentsCount: 0,
+            isAquaUser: true
         };
         
         users.push(newUser);
@@ -68,73 +119,10 @@ ensureCurrentUserExists() {
             username: username,
             role: newUser.role,
             avatarColor: newUser.avatarColor,
-            loginTime: new Date().toISOString()
+            loginTime: new Date().toISOString(),
+            displayName: username
         };
         
         localStorage.setItem('currentSession', JSON.stringify(session));
-    }
-}
-
-// Modificar login para aceptar cualquier usuario
-login(username, password = null) {
-    let users = JSON.parse(localStorage.getItem('forumUsers')) || [];
-    
-    // Buscar usuario
-    let user = users.find(u => u.username.toLowerCase() === username.toLowerCase());
-    
-    // Si no existe, crearlo automáticamente
-    if (!user) {
-        user = {
-            id: Date.now(),
-            username: username,
-            email: `${username.toLowerCase()}@hmfb.forum`,
-            password: this.hashPassword(username),
-            role: 'user',
-            avatarColor: this.getRandomColor(),
-            registered: new Date().toISOString(),
-            lastLogin: new Date().toISOString(),
-            lastSeen: new Date().toISOString(),
-            postsCount: 0,
-            likesCount: 0,
-            commentsCount: 0
-        };
-        
-        users.push(user);
-        localStorage.setItem('forumUsers', JSON.stringify(users));
-    }
-    
-    // Actualizar último login
-    user.lastLogin = new Date().toISOString();
-    user.lastSeen = new Date().toISOString();
-    localStorage.setItem('forumUsers', JSON.stringify(users));
-    
-    // Guardar sesión
-    const session = {
-        userId: user.id,
-        username: user.username,
-        role: user.role,
-        avatarColor: user.avatarColor,
-        loginTime: new Date().toISOString()
-    };
-    
-    localStorage.setItem('currentSession', JSON.stringify(session));
-    
-    // Agregar a usuarios online
-    this.addOnlineUser(user.id);
-    
-    return { success: true, user: session };
-}
-
-// Nueva función para actualizar último visto
-updateLastSeen() {
-    const session = this.getCurrentSession();
-    if (!session) return;
-    
-    let users = JSON.parse(localStorage.getItem('forumUsers')) || [];
-    const userIndex = users.findIndex(u => u.id === session.userId);
-    
-    if (userIndex !== -1) {
-        users[userIndex].lastSeen = new Date().toISOString();
-        localStorage.setItem('forumUsers', JSON.stringify(users));
     }
 }
