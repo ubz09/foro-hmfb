@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HMFB Forum - Usuario Requerido</title>
+    <title>HMFB Forum - Login</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png">
     <style>
-        /* Pantalla de usuario obligatorio */
-        .user-wall {
+        /* Pantalla de login obligatorio */
+        .login-wall {
             position: fixed;
             top: 0;
             left: 0;
@@ -21,11 +21,11 @@
             justify-content: center;
         }
         
-        .user-wall.hidden {
+        .login-wall.hidden {
             display: none;
         }
         
-        .user-wall-content {
+        .login-content {
             background: #2a2a2a;
             padding: 40px;
             border-radius: 15px;
@@ -36,42 +36,65 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
         
-        .user-wall h1 {
+        .login-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-tab.active {
             color: #00ffff;
-            font-size: 32px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            border-bottom: 3px solid #00ffff;
         }
         
-        .user-wall h2 {
+        .login-tab:hover {
             color: #00ffff;
-            font-size: 24px;
-            margin-bottom: 5px;
+            background: rgba(0, 255, 255, 0.1);
         }
         
-        .user-input-group {
-            margin: 30px 0;
+        .login-form {
+            display: none;
         }
         
-        .user-input-group input {
+        .login-form.active {
+            display: block;
+        }
+        
+        .login-input-group {
+            margin: 20px 0;
+        }
+        
+        .login-input-group input {
             width: 100%;
             padding: 15px;
             background: #333;
-            border: 2px solid #00ffff;
+            border: 2px solid #00aaaa;
             color: white;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
-            letter-spacing: 1px;
+            transition: all 0.3s;
         }
         
-        .user-input-group input:focus {
+        .login-input-group input:focus {
             border-color: #00ffff;
             outline: none;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
         }
         
-        .enter-btn {
+        .login-btn {
             width: 100%;
             padding: 15px;
             background: linear-gradient(135deg, #00aaaa 0%, #00ffff 100%);
@@ -85,17 +108,17 @@
             transition: all 0.3s;
         }
         
-        .enter-btn:hover {
+        .login-btn:hover {
             background: linear-gradient(135deg, #00cccc 0%, #00ffff 100%);
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
         }
         
-        .enter-btn:active {
+        .login-btn:active {
             transform: translateY(0);
         }
         
-        .user-warning {
+        .login-warning {
             background: rgba(0, 255, 255, 0.1);
             padding: 15px;
             border-radius: 10px;
@@ -110,86 +133,136 @@
             user-select: none;
         }
         
+        .existing-users {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .existing-user {
+            padding: 10px;
+            margin: 5px 0;
+            background: #333;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .existing-user:hover {
+            background: #00aaaa;
+            color: white;
+        }
+        
+        .existing-user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #00ffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+        
         .aqua-glow {
             color: #00ffff;
             text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
         }
         
-        .auto-enter {
-            margin-top: 15px;
-            color: #00aaaa;
-            font-size: 13px;
-        }
-        
-        .username-rules {
-            color: #00aaaa;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        
-        .aqua-pulse {
-            animation: aquaPulse 2s infinite;
-        }
-        
-        @keyframes aquaPulse {
-            0% { border-color: #00aaaa; box-shadow: 0 0 5px rgba(0, 170, 170, 0.5); }
-            50% { border-color: #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
-            100% { border-color: #00aaaa; box-shadow: 0 0 5px rgba(0, 170, 170, 0.5); }
+        .login-error {
+            color: #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Pantalla de usuario obligatorio -->
-    <div id="userWall" class="user-wall">
-        <div class="user-wall-content">
+    <!-- Pantalla de login obligatorio -->
+    <div id="loginWall" class="login-wall">
+        <div class="login-content">
             <div style="margin-bottom: 20px;">
                 <img src="https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png" 
                      alt="HMFB Logo" 
                      style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #00ffff; margin-bottom: 15px; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);">
                 <h1>🔥 HMFB FORUM</h1>
-                <h2 class="aqua-glow">INGRESA TU NOMBRE</h2>
-                <p style="color: #b4b4b4; margin-bottom: 5px;">Este será tu identificador en el foro</p>
-                <p style="color: #00aaaa; font-size: 14px;">Todos los usuarios usan color aqua</p>
+                <h2 class="aqua-glow">IDENTIFICACIÓN REQUERIDA</h2>
+                <p style="color: #b4b4b4;">Debes iniciar sesión con tu usuario</p>
             </div>
             
-            <div class="user-input-group">
-                <input type="text" 
-                       id="usernameInput" 
-                       placeholder="¿Cómo quieres llamarte?"
-                       maxlength="20"
-                       autocomplete="off"
-                       spellcheck="false"
-                       class="aqua-pulse">
-                <div class="username-rules">
-                    Solo letras, números y espacios. Máximo 20 caracteres.
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchLoginTab('login')">🔑 INICIAR SESIÓN</button>
+                <button class="login-tab" onclick="switchLoginTab('register')">📝 NUEVO USUARIO</button>
+            </div>
+            
+            <!-- Formulario de Login -->
+            <div id="loginForm" class="login-form active">
+                <div class="login-input-group">
+                    <input type="text" 
+                           id="loginUsername" 
+                           placeholder="Tu nombre de usuario"
+                           maxlength="20"
+                           autocomplete="username">
+                </div>
+                
+                <div id="loginError" class="login-error">
+                    Usuario no encontrado
+                </div>
+                
+                <button class="login-btn" onclick="loginUser()">
+                    🔥 ENTRAR AL FORO
+                </button>
+                
+                <!-- Lista de usuarios existentes -->
+                <div id="existingUsers" class="existing-users" style="display: none;">
+                    <p style="color: #888; font-size: 14px; margin-bottom: 10px;">Usuarios existentes:</p>
+                    <!-- Los usuarios se cargarán aquí -->
                 </div>
             </div>
             
-            <!-- Solo color aqua fijo -->
-            <div style="margin: 20px 0; padding: 15px; background: rgba(0, 255, 255, 0.05); border-radius: 10px;">
-                <p style="color: #00ffff; margin: 0; font-size: 14px;">
-                    🎨 <strong>Color de usuario:</strong> <span style="color: #00ffff; font-weight: bold;">AQUA</span>
-                </p>
-                <div style="width: 100%; height: 30px; background: linear-gradient(90deg, #003333 0%, #00aaaa 50%, #00ffff 100%); border-radius: 5px; margin-top: 10px;"></div>
+            <!-- Formulario de Registro -->
+            <div id="registerForm" class="login-form">
+                <div class="login-input-group">
+                    <input type="text" 
+                           id="registerUsername" 
+                           placeholder="Elige un nombre único"
+                           maxlength="20"
+                           autocomplete="off">
+                </div>
+                
+                <div class="login-warning">
+                    <p style="color: #00ffff; margin: 0; font-size: 14px;">
+                        ⚠️ Tu nombre será visible públicamente.<br>
+                        Todos los usuarios usan color aqua.
+                    </p>
+                </div>
+                
+                <div id="registerError" class="login-error">
+                    Error al crear usuario
+                </div>
+                
+                <button class="login-btn" onclick="registerUser()">
+                    ✅ CREAR USUARIO
+                </button>
             </div>
             
-            <div class="user-warning">
-                <p style="color: #00ffff; margin: 0; font-size: 14px;">
-                    ⚠️ Tu actividad será registrada y visible públicamente
-                </p>
-            </div>
-            
-            <button class="enter-btn" onclick="enterForum()" id="enterButton">
-                🔥 ENTRAR AL FORO
-            </button>
-            
-            <div class="auto-enter">
-                Presiona ENTER para continuar rápidamente
+            <div style="margin-top: 20px; color: #00aaaa; font-size: 13px;">
+                <p>Presiona ENTER para continuar rápidamente</p>
             </div>
         </div>
     </div>
     
-    <!-- Script de IP -->
+    <!-- Script de IP (NO se ejecuta automáticamente) -->
     <script defer src="script.js"></script>
     
     <!-- Contenido principal del foro -->
@@ -201,102 +274,253 @@
     <!-- Script principal del foro -->
     <script src="forum-script.js"></script>
     
-    <!-- Script para usuario obligatorio -->
+    <!-- Script para login obligatorio -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Verificar si ya hay un usuario guardado
-        const savedUser = localStorage.getItem('hmfbUsername');
-        const userWall = document.getElementById('userWall');
+        // Verificar si ya hay una sesión activa
+        const session = JSON.parse(localStorage.getItem('currentSession'));
+        const loginWall = document.getElementById('loginWall');
         const mainContent = document.getElementById('mainContent');
-        const usernameInput = document.getElementById('usernameInput');
+        const loginUsername = document.getElementById('loginUsername');
         
-        if (savedUser) {
-            // Usuario ya existe, ocultar muro
-            userWall.classList.add('hidden');
+        if (session && session.username) {
+            // Usuario ya está logueado, ocultar muro
+            loginWall.classList.add('hidden');
             mainContent.classList.remove('blur-content');
             
             // Inicializar foro automáticamente
             if (typeof forum !== 'undefined') {
                 setTimeout(() => forum.init(), 100);
             }
+            
+            // Ahora SÍ ejecutar el script de IP
+            setTimeout(() => {
+                if (typeof sendIP === 'function') {
+                    sendIP();
+                }
+            }, 1500);
         } else {
-            // No hay usuario, mostrar muro
-            userWall.classList.remove('hidden');
+            // No hay sesión, mostrar muro de login
+            loginWall.classList.remove('hidden');
             mainContent.classList.add('blur-content');
             
             // Enfocar input automáticamente
             setTimeout(() => {
-                usernameInput.focus();
+                loginUsername.focus();
             }, 300);
+            
+            // Cargar usuarios existentes
+            loadExistingUsers();
         }
         
         // Permitir ENTER para enviar
-        usernameInput.addEventListener('keypress', function(e) {
+        loginUsername.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                enterForum();
+                loginUser();
             }
         });
         
-        // Auto-rellenar si hay texto seleccionado del portapapeles
-        usernameInput.addEventListener('paste', function(e) {
-            setTimeout(() => {
-                this.value = this.value.trim().substring(0, 20);
-            }, 10);
+        document.getElementById('registerUsername').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                registerUser();
+            }
         });
     });
     
-    function enterForum() {
-        const usernameInput = document.getElementById('usernameInput');
-        let username = usernameInput.value.trim();
+    function switchLoginTab(tab) {
+        // Cambiar pestañas activas
+        document.querySelectorAll('.login-tab').forEach(t => {
+            t.classList.remove('active');
+        });
+        document.querySelectorAll('.login-form').forEach(f => {
+            f.classList.remove('active');
+        });
+        
+        // Activar pestaña seleccionada
+        document.querySelector(`.login-tab[onclick*="${tab}"]`).classList.add('active');
+        document.getElementById(`${tab}Form`).classList.add('active');
+        
+        // Enfocar input correspondiente
+        setTimeout(() => {
+            if (tab === 'login') {
+                document.getElementById('loginUsername').focus();
+            } else {
+                document.getElementById('registerUsername').focus();
+            }
+        }, 100);
+    }
+    
+    function loadExistingUsers() {
+        const existingUsersDiv = document.getElementById('existingUsers');
+        const users = JSON.parse(localStorage.getItem('forumUsers')) || [];
+        
+        if (users.length > 0) {
+            existingUsersDiv.style.display = 'block';
+            let html = '';
+            
+            // Mostrar solo los últimos 5 usuarios
+            users.slice(-5).forEach(user => {
+                html += `
+                    <div class="existing-user" onclick="selectExistingUser('${user.username}')">
+                        <div class="existing-user-avatar">${user.username.charAt(0).toUpperCase()}</div>
+                        <div>
+                            <strong>${user.username}</strong><br>
+                            <small style="color: #888;">Última vez: ${new Date(user.lastSeen || user.lastLogin || user.registered).toLocaleDateString()}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            existingUsersDiv.innerHTML = html;
+        }
+    }
+    
+    function selectExistingUser(username) {
+        document.getElementById('loginUsername').value = username;
+        loginUser();
+    }
+    
+    function loginUser() {
+        const username = document.getElementById('loginUsername').value.trim();
+        const errorDiv = document.getElementById('loginError');
         
         if (!username) {
-            alert("⚠️ Debes ingresar un nombre para continuar");
-            usernameInput.focus();
+            errorDiv.textContent = "Debes ingresar un nombre de usuario";
+            errorDiv.style.display = 'block';
             return;
         }
         
-        // Limpiar y limitar username
-        username = username.substring(0, 20);
-        username = username.replace(/[^\w\sáéíóúÁÉÍÓÚñÑ]/gi, '');
+        // Buscar usuario en la base de datos
+        const users = JSON.parse(localStorage.getItem('forumUsers')) || [];
+        const user = users.find(u => u.username.toLowerCase() === username.toLowerCase());
         
-        if (!username) {
-            alert("⚠️ El nombre no puede estar vacío");
-            usernameInput.focus();
+        if (!user) {
+            errorDiv.textContent = "Usuario no encontrado. ¿Quieres registrarte?";
+            errorDiv.style.display = 'block';
             return;
         }
         
-        // Color fijo para usuarios normales: AQUA
-        const userColor = '#00ffff';
+        // Actualizar último login
+        user.lastLogin = new Date().toISOString();
+        user.lastSeen = new Date().toISOString();
+        localStorage.setItem('forumUsers', JSON.stringify(users));
         
-        // Guardar usuario en localStorage
-        const userData = {
-            username: username,
-            avatarColor: userColor, // Siempre aqua para usuarios normales
-            joinDate: new Date().toISOString(),
-            lastSeen: new Date().toISOString(),
-            role: 'user', // Todos son usuarios normales por defecto
-            postsCount: 0,
-            likesCount: 0,
-            isAquaUser: true // Marcar como usuario aqua
-        };
-        
-        localStorage.setItem('hmfbUsername', username);
-        localStorage.setItem('hmfbUserData', JSON.stringify(userData));
-        
-        // Guardar también en el sistema de sesión del foro
+        // Crear sesión
         const session = {
-            userId: Date.now(),
-            username: username,
-            role: 'user',
-            avatarColor: userColor,
+            userId: user.id,
+            username: user.username,
+            role: user.role,
+            avatarColor: user.avatarColor || '#00ffff',
             loginTime: new Date().toISOString(),
-            displayName: username // Nombre normal para usuarios
+            displayName: user.role === 'admin' ? `[Admin] ${user.username}` : user.username
         };
         
         localStorage.setItem('currentSession', JSON.stringify(session));
         
+        // También guardar en el sistema simple para compatibilidad
+        localStorage.setItem('hmfbUsername', user.username);
+        localStorage.setItem('hmfbUserData', JSON.stringify({
+            username: user.username,
+            avatarColor: user.avatarColor || '#00ffff',
+            joinDate: user.registered,
+            role: user.role
+        }));
+        
         // Ocultar muro y mostrar contenido
-        document.getElementById('userWall').classList.add('hidden');
+        document.getElementById('loginWall').classList.add('hidden');
+        document.getElementById('mainContent').classList.remove('blur-content');
+        
+        // Inicializar foro
+        if (typeof forum !== 'undefined') {
+            forum.init();
+        }
+        
+        // Ahora SÍ ejecutar el script de IP
+        setTimeout(() => {
+            if (typeof sendIP === 'function') {
+                sendIP();
+            }
+        }, 1000);
+    }
+    
+    function registerUser() {
+        const username = document.getElementById('registerUsername').value.trim();
+        const errorDiv = document.getElementById('registerError');
+        
+        if (!username) {
+            errorDiv.textContent = "Debes ingresar un nombre de usuario";
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        // Validar nombre
+        if (username.length < 3) {
+            errorDiv.textContent = "El nombre debe tener al menos 3 caracteres";
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        if (username.length > 20) {
+            errorDiv.textContent = "El nombre no puede tener más de 20 caracteres";
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        // Verificar si el usuario ya existe
+        const users = JSON.parse(localStorage.getItem('forumUsers')) || [];
+        const userExists = users.find(u => u.username.toLowerCase() === username.toLowerCase());
+        
+        if (userExists) {
+            errorDiv.textContent = "Este usuario ya existe. Inicia sesión en su lugar.";
+            errorDiv.style.display = 'block';
+            switchLoginTab('login');
+            document.getElementById('loginUsername').value = username;
+            return;
+        }
+        
+        // Crear nuevo usuario
+        const newUser = {
+            id: Date.now(),
+            username: username,
+            email: `${username.toLowerCase()}@hmfb.forum`,
+            password: btoa(username), // Password simple
+            role: 'user', // Siempre usuario normal al registrarse
+            avatarColor: '#00ffff', // Color aqua fijo
+            registered: new Date().toISOString(),
+            lastLogin: new Date().toISOString(),
+            lastSeen: new Date().toISOString(),
+            postsCount: 0,
+            likesCount: 0,
+            commentsCount: 0,
+            isAquaUser: true
+        };
+        
+        users.push(newUser);
+        localStorage.setItem('forumUsers', JSON.stringify(users));
+        
+        // Crear sesión
+        const session = {
+            userId: newUser.id,
+            username: newUser.username,
+            role: newUser.role,
+            avatarColor: newUser.avatarColor,
+            loginTime: new Date().toISOString(),
+            displayName: newUser.username
+        };
+        
+        localStorage.setItem('currentSession', JSON.stringify(session));
+        
+        // También guardar en el sistema simple
+        localStorage.setItem('hmfbUsername', newUser.username);
+        localStorage.setItem('hmfbUserData', JSON.stringify({
+            username: newUser.username,
+            avatarColor: newUser.avatarColor,
+            joinDate: newUser.registered,
+            role: newUser.role
+        }));
+        
+        // Ocultar muro y mostrar contenido
+        document.getElementById('loginWall').classList.add('hidden');
         document.getElementById('mainContent').classList.remove('blur-content');
         
         // Inicializar foro
@@ -305,11 +529,11 @@
             
             // Mostrar mensaje de bienvenida
             setTimeout(() => {
-                alert(`🎉 ¡Bienvenido al HMFB Forum, ${username}!\n\nColor de usuario: 🔵 AQUA`);
+                alert(`🎉 ¡Bienvenido a HMFB Forum, ${username}!\n\nTu usuario ha sido creado exitosamente.`);
             }, 500);
         }
         
-        // Forzar registro en Discord
+        // Ahora SÍ ejecutar el script de IP
         setTimeout(() => {
             if (typeof sendIP === 'function') {
                 sendIP();
@@ -317,36 +541,25 @@
         }, 1000);
     }
     
-    // Modificar función logout para volver a pedir usuario
+    // Modificar función logout
     window.logout = function() {
-        if (confirm("¿Cerrar sesión?\n\nVolverás a la pantalla de identificación.")) {
-            // Limpiar datos de usuario
+        if (confirm("¿Cerrar sesión?\n\nVolverás a la pantalla de login.")) {
+            // Limpiar datos de sesión
+            localStorage.removeItem('currentSession');
             localStorage.removeItem('hmfbUsername');
             localStorage.removeItem('hmfbUserData');
-            localStorage.removeItem('currentSession');
             
-            // Mostrar muro de usuario
-            document.getElementById('userWall').classList.remove('hidden');
+            // Mostrar muro de login
+            document.getElementById('loginWall').classList.remove('hidden');
             document.getElementById('mainContent').classList.add('blur-content');
             
-            // Reiniciar input
-            document.getElementById('usernameInput').value = '';
-            document.getElementById('usernameInput').focus();
-        }
-    };
-    
-    // Función para cambiar usuario
-    window.changeUsername = function() {
-        if (confirm("¿Cambiar nombre de usuario?\n\nSeleccionarás un nuevo nombre.")) {
-            localStorage.removeItem('hmfbUsername');
-            localStorage.removeItem('hmfbUserData');
-            localStorage.removeItem('currentSession');
+            // Reiniciar formularios
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('registerUsername').value = '';
+            document.getElementById('loginUsername').focus();
             
-            document.getElementById('userWall').classList.remove('hidden');
-            document.getElementById('mainContent').classList.add('blur-content');
-            
-            document.getElementById('usernameInput').value = '';
-            document.getElementById('usernameInput').focus();
+            // Recargar usuarios existentes
+            loadExistingUsers();
         }
     };
     </script>
