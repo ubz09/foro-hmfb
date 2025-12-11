@@ -3,320 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E.L.K Forums - Comunidad</title>
+    <title>HMFB Forums - Comunidad</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Estilos específicos para el foro */
-        .forum-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .forum-header {
-            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-            border: 1px solid #444;
-        }
-        
-        .forum-header h1 {
-            color: #800080;
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-        
-        .user-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #2a2a2a;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #800080;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        
-        .btn {
-            padding: 8px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background: #800080;
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: #444;
-            color: white;
-        }
-        
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-        
-        .categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .category-card {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #800080;
-        }
-        
-        .category-card h3 {
-            color: #aaaaaa;
-            margin-bottom: 10px;
-        }
-        
-        .posts-container {
-            background: #2a2a2a;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .post {
-            background: #333;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #800080;
-        }
-        
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .post-author {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .post-author .user-avatar {
-            width: 30px;
-            height: 30px;
-            font-size: 12px;
-        }
-        
-        .post-date {
-            color: #888;
-            font-size: 14px;
-        }
-        
-        .post-content {
-            color: #b4b4b4;
-            margin: 15px 0;
-            line-height: 1.6;
-        }
-        
-        .post-image {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 15px 0;
-            max-height: 300px;
-            object-fit: cover;
-        }
-        
-        .post-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .post-actions button {
-            background: transparent;
-            border: 1px solid #444;
-            color: #888;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .post-actions button:hover {
-            border-color: #800080;
-            color: #800080;
-        }
-        
-        .create-post-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #800080;
-            color: white;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(128, 0, 128, 0.3);
-            z-index: 1000;
-        }
-        
-        .role-badge {
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .admin-badge {
-            background: #800080;
-            color: white;
-        }
-        
-        .user-badge {
-            background: #444;
-            color: #ccc;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background: #2a2a2a;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            color: #b4b4b4;
-            margin-bottom: 8px;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            background: #333;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .file-upload {
-            border: 2px dashed #444;
-            padding: 20px;
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        
-        .file-upload:hover {
-            border-color: #800080;
-        }
-        
-        .image-preview {
-            margin-top: 15px;
-        }
-        
-        .image-preview img {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 8px;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 32px;
-            color: #800080;
-            font-weight: bold;
-        }
-        
-        .stat-label {
-            color: #888;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
 </head>
 <body>
     <!-- Script de IP sigue funcionando -->
@@ -325,13 +13,13 @@
     <div class="forum-container">
         <!-- Header del Foro -->
         <div class="forum-header">
-            <h1>🎮 E.L.K Forums</h1>
-            <p style="color: #b4b4b4;">Comunidad exclusiva para compartir contenido y discusiones</p>
+            <h1>🎮 HMFB Forums</h1>
+            <p>Comunidad exclusiva para compartir contenido y discusiones</p>
         </div>
         
         <!-- Controles de Usuario -->
         <div class="user-controls">
-            <div id="guestControls" style="display: none;">
+            <div id="guestControls">
                 <button class="btn btn-primary" onclick="showModal('loginModal')">Iniciar Sesión</button>
                 <button class="btn btn-secondary" onclick="showModal('registerModal')">Registrarse</button>
             </div>
@@ -373,28 +61,28 @@
         <div class="categories">
             <div class="category-card">
                 <h3>📢 Anuncios</h3>
-                <p style="color: #888;">Noticias oficiales y actualizaciones</p>
+                <p>Noticias oficiales y actualizaciones</p>
             </div>
             <div class="category-card">
                 <h3>💬 General</h3>
-                <p style="color: #888;">Discusión general y temas diversos</p>
+                <p>Discusión general y temas diversos</p>
             </div>
             <div class="category-card">
                 <h3>🖼️ Multimedia</h3>
-                <p style="color: #888;">Comparte imágenes y capturas</p>
+                <p>Comparte imágenes y capturas</p>
             </div>
             <div class="category-card">
                 <h3>🎮 Gaming</h3>
-                <p style="color: #888;">Discusión sobre videojuegos</p>
+                <p>Discusión sobre videojuegos</p>
             </div>
         </div>
         
         <!-- Lista de Posts -->
         <div class="posts-container">
-            <h2 style="color: #aaaaaa; margin-bottom: 20px;">📝 Posts Recientes</h2>
+            <h2>📝 Posts Recientes</h2>
             <div id="postsList">
                 <!-- Los posts se cargarán aquí -->
-                <p style="color: #888; text-align: center; padding: 40px;">Cargando posts...</p>
+                <p class="loading-text">Cargando posts...</p>
             </div>
         </div>
     </div>
@@ -408,7 +96,7 @@
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 style="color: #aaaaaa;">Iniciar Sesión</h2>
+                <h2>Iniciar Sesión</h2>
                 <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
             </div>
             <div class="form-group">
@@ -419,10 +107,10 @@
                 <label>Contraseña</label>
                 <input type="password" id="loginPassword" placeholder="Tu contraseña">
             </div>
-            <div id="loginError" style="color: #ff4444; margin-bottom: 15px; display: none;">
+            <div id="loginError" class="error-message">
                 Usuario o contraseña incorrectos
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="login()">Entrar</button>
+            <button class="btn btn-primary" onclick="login()">Entrar</button>
         </div>
     </div>
     
@@ -430,7 +118,7 @@
     <div id="registerModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 style="color: #aaaaaa;">Registrarse</h2>
+                <h2>Registrarse</h2>
                 <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
             </div>
             <div class="form-group">
@@ -449,8 +137,8 @@
                 <label>Confirmar Contraseña</label>
                 <input type="password" id="registerConfirmPassword" placeholder="Repite tu contraseña">
             </div>
-            <div id="registerError" style="color: #ff4444; margin-bottom: 15px; display: none;"></div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="register()">Crear Cuenta</button>
+            <div id="registerError" class="error-message"></div>
+            <button class="btn btn-primary" onclick="register()">Crear Cuenta</button>
         </div>
     </div>
     
@@ -458,7 +146,7 @@
     <div id="createPostModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 style="color: #aaaaaa;">Crear Nuevo Post</h2>
+                <h2>Crear Nuevo Post</h2>
                 <button class="close-modal" onclick="closeModal('createPostModal')">&times;</button>
             </div>
             <div class="form-group">
@@ -486,8 +174,8 @@
                 <input type="file" id="postImage" accept="image/*" style="display: none;" onchange="previewImage(this)">
                 <div class="image-preview" id="imagePreview"></div>
             </div>
-            <div id="createPostError" style="color: #ff4444; margin-bottom: 15px; display: none;"></div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="createPost()">Publicar Post</button>
+            <div id="createPostError" class="error-message"></div>
+            <button class="btn btn-primary" onclick="createPost()">Publicar Post</button>
         </div>
     </div>
     
@@ -495,23 +183,23 @@
     <div id="adminPanelModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 style="color: #aaaaaa;">Panel de Administración</h2>
+                <h2>Panel de Administración</h2>
                 <button class="close-modal" onclick="closeModal('adminPanelModal')">&times;</button>
             </div>
             
             <div style="margin-bottom: 20px;">
-                <h3 style="color: #b4b4b4;">Gestión de Usuarios</h3>
-                <div id="adminUsersList" style="max-height: 300px; overflow-y: auto;">
+                <h3>Gestión de Usuarios</h3>
+                <div id="adminUsersList" class="scroll-container">
                     <!-- Lista de usuarios -->
                 </div>
             </div>
             
             <div>
-                <h3 style="color: #b4b4b4;">Estadísticas</h3>
-                <div style="background: #333; padding: 15px; border-radius: 8px;">
-                    <p style="color: #888;">Total de usuarios registrados: <span id="adminTotalUsers">0</span></p>
-                    <p style="color: #888;">Total de posts: <span id="adminTotalPosts">0</span></p>
-                    <p style="color: #888;">Tu rol: <span class="role-badge admin-badge">ADMINISTRADOR</span></p>
+                <h3>Estadísticas</h3>
+                <div class="info-card">
+                    <p>Total de usuarios registrados: <strong id="adminTotalUsers">0</strong></p>
+                    <p>Total de posts: <strong id="adminTotalPosts">0</strong></p>
+                    <p>Tu rol: <span class="role-badge admin-badge">ADMINISTRADOR</span></p>
                 </div>
             </div>
         </div>
@@ -521,9 +209,9 @@
     <script src="forum-script.js"></script>
     
     <!-- Footer -->
-    <footer style="text-align: center; padding: 30px; background: #1a1a1a; margin-top: 50px;">
+    <footer>
         © 2025 HMFB Forums - Todos los derechos reservados<br>
-        <small style="color: #666;">Comunidad exclusiva E.L.K</small>
+        <small>Comunidad exclusiva HMFB</small>
     </footer>
 </body>
 </html>
