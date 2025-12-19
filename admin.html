@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - HMFB Exposeds</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Verificación de admin -->
+    <div class="admin-verify" id="adminVerify">
+        <div class="verify-container">
+            <h2><i class="fas fa-user-shield"></i> Verificación Requerida</h2>
+            <p>Esta página es solo para administradores.</p>
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Volver al Foro</a>
+        </div>
+    </div>
+
+    <!-- Panel Admin (solo visible si es admin) -->
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <header class="admin-header">
+            <div class="container">
+                <h1><i class="fas fa-crown"></i> Panel de Administración</h1>
+                <div class="admin-controls">
+                    <span id="adminName">Admin</span>
+                    <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-main container">
+            <!-- Estadísticas -->
+            <section class="admin-stats">
+                <h2><i class="fas fa-chart-bar"></i> Estadísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-images"></i>
+                        <h3 id="totalPosts">0</h3>
+                        <p>Exposeds Publicados</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3 id="visitorsToday">0</h3>
+                        <p>Visitantes Hoy</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-eye"></i>
+                        <h3 id="totalViews">0</h3>
+                        <p>Total de Visitas</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gestión de Posts -->
+            <section class="posts-management">
+                <h2><i class="fas fa-edit"></i> Gestión de Exposeds</h2>
+                <div class="posts-list" id="adminPostsList">
+                    <!-- Posts se cargarán aquí -->
+                </div>
+            </section>
+
+            <!-- Subir nuevo post -->
+            <section class="admin-upload">
+                <h2><i class="fas fa-plus-circle"></i> Crear Nuevo Exposed</h2>
+                <div class="upload-form">
+                    <input type="text" id="adminPostTitle" placeholder="Título de la exposición" class="form-input">
+                    <textarea id="adminPostDesc" placeholder="Descripción detallada..." class="form-textarea"></textarea>
+                    
+                    <div class="form-row">
+                        <input type="text" id="adminStaffName" placeholder="Nombre del Staff" class="form-input">
+                        <input type="text" id="adminCommunity" placeholder="Comunidad/Foro" class="form-input">
+                    </div>
+                    
+                    <input type="text" id="adminImageUrl" placeholder="URL de la imagen (Imgur/Google Drive)" class="form-input">
+                    <input type="text" id="adminEvidenceUrl" placeholder="URL de evidencia adicional (opcional)" class="form-input">
+                    
+                    <div class="form-actions">
+                        <button onclick="adminSubmitPost()" class="submit-btn"><i class="fas fa-paper-plane"></i> Publicar</button>
+                        <button onclick="clearForm()" class="clear-btn"><i class="fas fa-times"></i> Limpiar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logs de actividad -->
+            <section class="activity-logs">
+                <h2><i class="fas fa-history"></i> Logs de Actividad</h2>
+                <div class="logs-container" id="logsContainer">
+                    <div class="log-entry">
+                        <span class="log-time">[20:45:32]</span>
+                        <span class="log-action">Sistema iniciado</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="admin-footer">
+            <div class="container">
+                <p><i class="fas fa-shield-alt"></i> Panel Administrativo - HMFB Exposeds Staffs</p>
+                <p class="security-note">Todas las acciones son registradas y monitorizadas.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        // Verificar admin al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAccess();
+            if (isAdmin()) {
+                loadAdminData();
+            }
+        });
+    </script>
+</body>
+</html>
