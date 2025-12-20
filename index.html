@@ -3,143 +3,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HMFB - Exposeds Staffs</title>
+    <title>HMFB Network | Portal de Moderación</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>404 - Page Not Found :(</h1>
-        <p>Oops! The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
-        
-        <!-- FORO AÑADIDO AQUÍ -->
-        <div class="foro-section">
-            <h2 style="color: #800080; border-bottom: 2px solid #800080; padding-bottom: 10px;">
-                🚨 HMFB - EXPOSEDS STAFFS
-            </h2>
-            
-            <!-- Login Admin -->
-            <div class="login-box">
-                <h3>🔐 Acceso Administrador</h3>
-                <input type="text" id="adminUser" placeholder="Usuario" class="foro-input">
-                <input type="password" id="adminPass" placeholder="Contraseña" class="foro-input">
-                <button onclick="adminLogin()" class="foro-btn">Iniciar Sesión</button>
-                <p id="loginStatus" class="status"></p>
-            </div>
-            
-            <!-- Panel de Admin (oculto inicialmente) -->
-            <div id="adminPanel" style="display: none; margin-top: 30px; padding: 20px; background: #2a2a2a; border-radius: 10px;">
-                <h3>👑 Panel de Administración</h3>
-                <div class="upload-form">
-                    <input type="text" id="postTitle" placeholder="Título del exposed" class="foro-input">
-                    <textarea id="postDesc" placeholder="Descripción y detalles..." class="foro-textarea"></textarea>
-                    <input type="text" id="postImage" placeholder="URL de imagen (opcional)" class="foro-input">
-                    <button onclick="submitExposed()" class="foro-btn">📤 Publicar Exposed</button>
+    <!-- Fondo futurista -->
+    <div class="cyber-bg">
+        <div class="grid-lines"></div>
+        <div class="particles"></div>
+        <div class="glow-effects">
+            <div class="glow-1"></div>
+            <div class="glow-2"></div>
+            <div class="glow-3"></div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="cyber-container">
+        <!-- Header futurista -->
+        <header class="cyber-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="hologram-logo">
+                        <div class="logo-core"></div>
+                        <div class="logo-ring"></div>
+                        <div class="logo-pulse"></div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="cyber-title">HMFB <span class="gradient-text">NETWORK</span></h1>
+                        <p class="cyber-subtitle">Sistema de Auditoría de Moderadores</p>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Lista de Exposeds -->
-            <div class="exposeds-list">
-                <h3>📋 Exposeds Publicados</h3>
-                <div id="exposedsContainer">
-                    <!-- Aquí se cargarán los exposeds -->
-                    <div class="exposed-item">
-                        <h4>🔍 Ejemplo: Staff Corrupto</h4>
-                        <p>Este es un ejemplo de cómo se verán los exposeds reales.</p>
-                        <small>Publicado por: Admin | Fecha: 15/12/2024</small>
+                
+                <div class="terminal-display">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                        <span class="terminal-text">system_status: online</span>
+                    </div>
+                    <div class="terminal-content">
+                        <p>> Iniciando protocolos de seguridad...</p>
+                        <p>> Sistema de auditoría: ACTIVO</p>
+                        <p>> Conexión segura establecida ✓</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Info del Foro -->
-            <div class="foro-info">
-                <h3>📜 Reglas del Foro</h3>
-                <ul>
-                    <li>✅ Solo pruebas verificables</li>
-                    <li>✅ No información personal</li>
-                    <li>✅ Solo staffs corruptos</li>
-                    <li>⚠️ IP de visitantes registrada</li>
-                </ul>
+        </header>
+
+        <!-- Panel de acceso -->
+        <main class="cyber-main">
+            <!-- Acceso administrativo (oculto para visitantes normales) -->
+            <section class="access-panel">
+                <div class="panel-glass">
+                    <div class="panel-header">
+                        <i class="fas fa-shield-alt panel-icon"></i>
+                        <h2>ACCESO DE AUDITORÍA</h2>
+                        <div class="security-level">
+                            <span class="level-tag">NIVEL 5</span>
+                            <div class="level-bars">
+                                <div class="bar active"></div>
+                                <div class="bar active"></div>
+                                <div class="bar active"></div>
+                                <div class="bar active"></div>
+                                <div class="bar active"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="login-form" id="loginSection">
+                        <div class="input-group">
+                            <div class="input-label">
+                                <i class="fas fa-user-secret"></i>
+                                <span>IDENTIFICADOR</span>
+                            </div>
+                            <input type="text" id="adminUser" class="cyber-input" placeholder="admin_001">
+                            <div class="input-line"></div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-label">
+                                <i class="fas fa-key"></i>
+                                <span>CÓDIGO DE ACCESO</span>
+                            </div>
+                            <input type="password" id="adminPass" class="cyber-input" placeholder="••••••••">
+                            <div class="input-line"></div>
+                        </div>
+
+                        <button class="cyber-btn" onclick="login()">
+                            <span class="btn-text">VERIFICAR CREDENCIALES</span>
+                            <div class="btn-glow"></div>
+                            <i class="fas fa-fingerprint btn-icon"></i>
+                        </button>
+
+                        <div class="access-note">
+                            <i class="fas fa-info-circle"></i>
+                            Solo personal autorizado de auditoría
+                        </div>
+                    </div>
+
+                    <!-- Panel de administración (solo visible después del login) -->
+                    <div class="admin-dashboard" id="adminPanel" style="display: none;">
+                        <div class="dashboard-header">
+                            <h3><i class="fas fa-crown"></i> PANEL DE AUDITORÍA</h3>
+                            <div class="user-badge">
+                                <i class="fas fa-user-astronaut"></i>
+                                <span id="currentUser">ADMIN_001</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-grid">
+                            <!-- Formulario de nuevo reporte -->
+                            <div class="card report-form">
+                                <div class="card-header">
+                                    <i class="fas fa-file-upload"></i>
+                                    <h4>NUEVO REPORTE</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label><i class="fas fa-heading"></i> TÍTULO</label>
+                                            <input type="text" id="reportTitle" class="form-input" placeholder="Caso de auditoría">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i class="fas fa-user-tag"></i> MODERADOR</label>
+                                            <input type="text" id="moderatorName" class="form-input" placeholder="ID del moderador">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><i class="fas fa-globe"></i> PLATAFORMA</label>
+                                            <select id="platform" class="form-select">
+                                                <option value="discord">Discord</option>
+                                                <option value="forum">Foro Web</option>
+                                                <option value="game">Juego Online</option>
+                                                <option value="social">Red Social</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label><i class="fas fa-align-left"></i> DESCRIPCIÓN</label>
+                                            <textarea id="reportDesc" class="form-textarea" placeholder="Detalles del caso..." rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group full-width">
+                                            <label><i class="fas fa-link"></i> EVIDENCIA (URL)</label>
+                                            <input type="text" id="evidenceUrl" class="form-input" placeholder="https://">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button class="btn-submit" onclick="submitReport()">
+                                            <i class="fas fa-paper-plane"></i>
+                                            REGISTRAR REPORTE
+                                        </button>
+                                        <button class="btn-clear" onclick="clearForm()">
+                                            <i class="fas fa-broom"></i>
+                                            LIMPIAR
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Estadísticas -->
+                            <div class="card stats-card">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-network"></i>
+                                    <h4>ESTADÍSTICAS</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="stats-grid">
+                                        <div class="stat-item">
+                                            <div class="stat-icon active">
+                                                <i class="fas fa-file-alt"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <span class="stat-value" id="totalReports">0</span>
+                                                <span class="stat-label">Reportes</span>
+                                            </div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-icon warning">
+                                                <i class="fas fa-user-slash"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <span class="stat-value" id="modsReported">0</span>
+                                                <span class="stat-label">Moderadores</span>
+                                            </div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-icon success">
+                                                <i class="fas fa-check-circle"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <span class="stat-value" id="resolvedCases">0</span>
+                                                <span class="stat-label">Resueltos</span>
+                                            </div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-icon info">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <div class="stat-info">
+                                                <span class="stat-value">24/7</span>
+                                                <span class="stat-label">Monitoreo</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reportes recientes -->
+                            <div class="card recent-reports">
+                                <div class="card-header">
+                                    <i class="fas fa-history"></i>
+                                    <h4>REPORTES RECIENTES</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="reports-list" id="reportsList">
+                                        <!-- Reportes se cargan aquí -->
+                                        <div class="empty-state">
+                                            <i class="fas fa-database"></i>
+                                            <p>No hay reportes registrados</p>
+                                            <small>Los reportes aparecerán aquí</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sistema de logs (solo para admin) -->
+                            <div class="card system-logs">
+                                <div class="card-header">
+                                    <i class="fas fa-terminal"></i>
+                                    <h4>REGISTRO DEL SISTEMA</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="logs-container" id="logsContainer">
+                                        <div class="log-entry">
+                                            <span class="log-time">[00:00:00]</span>
+                                            <span class="log-message">Sistema de auditoría inicializado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info para visitantes -->
+            <section class="public-info">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <h3>TRANSPARENCIA</h3>
+                        <p>Sistema interno de auditoría para garantizar la integridad de nuestros moderadores.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-user-lock"></i>
+                        </div>
+                        <h3>PRIVACIDAD</h3>
+                        <p>Todos los reportes son confidenciales y manejados con estricta seguridad.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>IMPARCIALIDAD</h3>
+                        <p>Cada caso es evaluado de manera objetiva y con evidencias verificables.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer futurista -->
+        <footer class="cyber-footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="footer-logo-text">
+                        <span class="footer-title">HMFB NETWORK</span>
+                        <span class="footer-subtitle">Sistema de Integridad</span>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#" class="footer-link"><i class="fas fa-file-contract"></i> Términos</a>
+                    <a href="#" class="footer-link"><i class="fas fa-lock"></i> Privacidad</a>
+                    <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> Soporte</a>
+                </div>
+                
+                <div class="footer-status">
+                    <div class="status-indicator online">
+                        <div class="status-pulse"></div>
+                        <span>SISTEMA OPERATIVO</span>
+                    </div>
+                    <div class="copyright">
+                        © 2024 HMFB Network • Todos los derechos reservados
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- FIN DEL FORO -->
-        
-        <div class="search-bar">
-            <input type="text" placeholder="Type here . . ." />
-        </div>
-        <p>
-            <a href="https://3elk.github.io/JumpScare-Spam/">Visit our homepage</a> | 
-            <a href="https://3elk.github.io/JumpScare-Spam/">Check out our latest articles</a> | 
-            <a href="https://3elk.github.io/JumpScare-Spam/">Browse our FAQs</a>
-        </p>
+        </footer>
     </div>
-    
+
+    <!-- Scripts -->
     <script src="script.js"></script>
     <script>
-        // Funciones básicas del foro
-        function adminLogin() {
+        // Sistema del foro (completamente discreto)
+        const ADMIN_CREDS = {
+            user: "auditor_hmfb",
+            pass: "SecurePass2024!"
+        };
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminSession();
+            loadReports();
+            updateStats();
+            
+            // Efectos de partículas
+            initParticles();
+            
+            // Mostrar logs del sistema
+            addSystemLog("Sistema de auditoría cargado", "info");
+        });
+
+        // Login discreto
+        function login() {
             const user = document.getElementById('adminUser').value;
             const pass = document.getElementById('adminPass').value;
-            const status = document.getElementById('loginStatus');
             
-            // Credenciales de admin (cambia esto)
-            if (user === 'admin' && pass === 'admin123') {
-                status.innerHTML = '<span style="color: green;">✅ Acceso concedido como Admin</span>';
-                status.style.display = 'block';
-                document.getElementById('adminPanel').style.display = 'block';
-                
-                // Guardar sesión
-                localStorage.setItem('hmfb_admin', 'true');
+            if (user === ADMIN_CREDS.user && pass === ADMIN_CREDS.pass) {
+                localStorage.setItem('hmfb_auditor', 'true');
+                localStorage.setItem('hmfb_session', Date.now());
+                showAdminPanel();
+                addSystemLog("Acceso de auditoría autorizado", "success");
             } else {
-                status.innerHTML = '<span style="color: red;">❌ Acceso denegado</span>';
-                status.style.display = 'block';
+                showMessage("error", "Credenciales no válidas");
+                addSystemLog("Intento de acceso no autorizado", "warning");
             }
         }
-        
-        function submitExposed() {
-            if (!localStorage.getItem('hmfb_admin')) {
-                alert('Solo administradores pueden publicar.');
+
+        // Mostrar panel admin
+        function showAdminPanel() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('currentUser').textContent = ADMIN_CREDS.user;
+            showMessage("success", "Sesión de auditoría activa");
+        }
+
+        // Enviar reporte
+        function submitReport() {
+            if (!isAdmin()) {
+                showMessage("error", "Sesión no válida");
                 return;
             }
-            
-            const title = document.getElementById('postTitle').value;
-            const desc = document.getElementById('postDesc').value;
-            const image = document.getElementById('postImage').value;
-            
-            if (!title || !desc) {
-                alert('Título y descripción son obligatorios.');
+
+            const title = document.getElementById('reportTitle').value;
+            const moderator = document.getElementById('moderatorName').value;
+            const platform = document.getElementById('platform').value;
+            const desc = document.getElementById('reportDesc').value;
+            const evidence = document.getElementById('evidenceUrl').value;
+
+            if (!title || !moderator || !desc) {
+                showMessage("error", "Complete los campos requeridos");
                 return;
             }
+
+            const report = {
+                id: 'RPT-' + Date.now(),
+                title: title,
+                moderator: moderator,
+                platform: platform,
+                description: desc,
+                evidence: evidence || null,
+                date: new Date().toLocaleString('es-ES'),
+                status: 'pending',
+                auditor: ADMIN_CREDS.user
+            };
+
+            saveReport(report);
+            addReportToList(report);
+            clearForm();
+            updateStats();
             
-            const exposedItem = document.createElement('div');
-            exposedItem.className = 'exposed-item';
-            exposedItem.innerHTML = `
-                <h4>🔍 ${title}</h4>
-                ${image ? `<img src="${image}" style="max-width: 100%; border-radius: 5px; margin: 10px 0;">` : ''}
-                <p>${desc}</p>
-                <small>Publicado por: Admin | Fecha: ${new Date().toLocaleDateString()}</small>
-                <hr style="margin: 10px 0; border-color: #444;">
+            showMessage("success", "Reporte registrado correctamente");
+            addSystemLog(`Nuevo reporte: ${title}`, "info");
+        }
+
+        // Guardar reporte
+        function saveReport(report) {
+            let reports = JSON.parse(localStorage.getItem('hmfb_reports')) || [];
+            reports.unshift(report);
+            localStorage.setItem('hmfb_reports', JSON.stringify(reports));
+        }
+
+        // Cargar reportes
+        function loadReports() {
+            const reports = JSON.parse(localStorage.getItem('hmfb_reports')) || [];
+            const container = document.getElementById('reportsList');
+            
+            if (reports.length === 0) return;
+            
+            container.innerHTML = '';
+            reports.slice(0, 5).forEach(report => addReportToList(report));
+        }
+
+        // Agregar reporte a la lista
+        function addReportToList(report) {
+            const container = document.getElementById('reportsList');
+            const reportElement = document.createElement('div');
+            reportElement.className = 'report-item';
+            reportElement.innerHTML = `
+                <div class="report-header">
+                    <span class="report-id">${report.id}</span>
+                    <span class="report-status ${report.status}">${report.status}</span>
+                </div>
+                <div class="report-title">${report.title}</div>
+                <div class="report-details">
+                    <span><i class="fas fa-user"></i> ${report.moderator}</span>
+                    <span><i class="fas fa-globe"></i> ${report.platform}</span>
+                    <span><i class="fas fa-calendar"></i> ${report.date.split(',')[0]}</span>
+                </div>
             `;
             
-            document.getElementById('exposedsContainer').prepend(exposedItem);
-            
-            // Limpiar formulario
-            document.getElementById('postTitle').value = '';
-            document.getElementById('postDesc').value = '';
-            document.getElementById('postImage').value = '';
-            
-            alert('✅ Exposed publicado exitosamente!');
+            if (container.querySelector('.empty-state')) {
+                container.innerHTML = '';
+            }
+            container.prepend(reportElement);
         }
-        
-        // Verificar si ya está logueado
-        if (localStorage.getItem('hmfb_admin')) {
-            document.getElementById('adminPanel').style.display = 'block';
-            document.getElementById('loginStatus').innerHTML = '<span style="color: green;">✅ Sesión activa como Admin</span>';
+
+        // Actualizar estadísticas
+        function updateStats() {
+            const reports = JSON.parse(localStorage.getItem('hmfb_reports')) || [];
+            const uniqueMods = [...new Set(reports.map(r => r.moderator))];
+            
+            document.getElementById('totalReports').textContent = reports.length;
+            document.getElementById('modsReported').textContent = uniqueMods.length;
+            document.getElementById('resolvedCases').textContent = reports.filter(r => r.status === 'resolved').length;
+        }
+
+        // Verificar sesión admin
+        function checkAdminSession() {
+            const isAdmin = localStorage.getItem('hmfb_auditor') === 'true';
+            const sessionTime = localStorage.getItem('hmfb_session');
+            
+            if (isAdmin && sessionTime && (Date.now() - sessionTime) < 3600000) { // 1 hora
+                showAdminPanel();
+            }
+        }
+
+        function isAdmin() {
+            return localStorage.getItem('hmfb_auditor') === 'true';
+        }
+
+        function clearForm() {
+            ['reportTitle', 'moderatorName', 'reportDesc', 'evidenceUrl'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('platform').selectedIndex = 0;
+        }
+
+        function showMessage(type, text) {
+            // Implementar toast notification si se desea
+            console.log(`[${type.toUpperCase()}] ${text}`);
+        }
+
+        function addSystemLog(message, type = 'info') {
+            const logs = document.getElementById('logsContainer');
+            const time = new Date().toLocaleTimeString('es-ES', {hour12: false});
+            const log = document.createElement('div');
+            log.className = `log-entry ${type}`;
+            log.innerHTML = `
+                <span class="log-time">[${time}]</span>
+                <span class="log-message">${message}</span>
+            `;
+            logs.appendChild(log);
+            logs.scrollTop = logs.scrollHeight;
+        }
+
+        // Efectos visuales
+        function initParticles() {
+            const particles = document.querySelector('.particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particles.appendChild(particle);
+            }
         }
     </script>
-    
-    <footer>
-        © 2025 HMFB Exposeds Staffs. All rights reserved. <br>
-        Contacto: <a href="mailto:admin@hmfb.com">admin@hmfb.com</a>
-    </footer>
 </body>
 </html>
