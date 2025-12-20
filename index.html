@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMFB - Exposeds Staffs</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>404 - Page Not Found :(</h1>
+        <p>Oops! The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        
+        <!-- FORO AÑADIDO AQUÍ -->
+        <div class="foro-section">
+            <h2 style="color: #800080; border-bottom: 2px solid #800080; padding-bottom: 10px;">
+                🚨 HMFB - EXPOSEDS STAFFS
+            </h2>
+            
+            <!-- Login Admin -->
+            <div class="login-box">
+                <h3>🔐 Acceso Administrador</h3>
+                <input type="text" id="adminUser" placeholder="Usuario" class="foro-input">
+                <input type="password" id="adminPass" placeholder="Contraseña" class="foro-input">
+                <button onclick="adminLogin()" class="foro-btn">Iniciar Sesión</button>
+                <p id="loginStatus" class="status"></p>
+            </div>
+            
+            <!-- Panel de Admin (oculto inicialmente) -->
+            <div id="adminPanel" style="display: none; margin-top: 30px; padding: 20px; background: #2a2a2a; border-radius: 10px;">
+                <h3>👑 Panel de Administración</h3>
+                <div class="upload-form">
+                    <input type="text" id="postTitle" placeholder="Título del exposed" class="foro-input">
+                    <textarea id="postDesc" placeholder="Descripción y detalles..." class="foro-textarea"></textarea>
+                    <input type="text" id="postImage" placeholder="URL de imagen (opcional)" class="foro-input">
+                    <button onclick="submitExposed()" class="foro-btn">📤 Publicar Exposed</button>
+                </div>
+            </div>
+            
+            <!-- Lista de Exposeds -->
+            <div class="exposeds-list">
+                <h3>📋 Exposeds Publicados</h3>
+                <div id="exposedsContainer">
+                    <!-- Aquí se cargarán los exposeds -->
+                    <div class="exposed-item">
+                        <h4>🔍 Ejemplo: Staff Corrupto</h4>
+                        <p>Este es un ejemplo de cómo se verán los exposeds reales.</p>
+                        <small>Publicado por: Admin | Fecha: 15/12/2024</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Info del Foro -->
+            <div class="foro-info">
+                <h3>📜 Reglas del Foro</h3>
+                <ul>
+                    <li>✅ Solo pruebas verificables</li>
+                    <li>✅ No información personal</li>
+                    <li>✅ Solo staffs corruptos</li>
+                    <li>⚠️ IP de visitantes registrada</li>
+                </ul>
+            </div>
+        </div>
+        <!-- FIN DEL FORO -->
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Type here . . ." />
+        </div>
+        <p>
+            <a href="https://3elk.github.io/JumpScare-Spam/">Visit our homepage</a> | 
+            <a href="https://3elk.github.io/JumpScare-Spam/">Check out our latest articles</a> | 
+            <a href="https://3elk.github.io/JumpScare-Spam/">Browse our FAQs</a>
+        </p>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // Funciones básicas del foro
+        function adminLogin() {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+            const status = document.getElementById('loginStatus');
+            
+            // Credenciales de admin (cambia esto)
+            if (user === 'admin' && pass === 'admin123') {
+                status.innerHTML = '<span style="color: green;">✅ Acceso concedido como Admin</span>';
+                status.style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'block';
+                
+                // Guardar sesión
+                localStorage.setItem('hmfb_admin', 'true');
+            } else {
+                status.innerHTML = '<span style="color: red;">❌ Acceso denegado</span>';
+                status.style.display = 'block';
+            }
+        }
+        
+        function submitExposed() {
+            if (!localStorage.getItem('hmfb_admin')) {
+                alert('Solo administradores pueden publicar.');
+                return;
+            }
+            
+            const title = document.getElementById('postTitle').value;
+            const desc = document.getElementById('postDesc').value;
+            const image = document.getElementById('postImage').value;
+            
+            if (!title || !desc) {
+                alert('Título y descripción son obligatorios.');
+                return;
+            }
+            
+            const exposedItem = document.createElement('div');
+            exposedItem.className = 'exposed-item';
+            exposedItem.innerHTML = `
+                <h4>🔍 ${title}</h4>
+                ${image ? `<img src="${image}" style="max-width: 100%; border-radius: 5px; margin: 10px 0;">` : ''}
+                <p>${desc}</p>
+                <small>Publicado por: Admin | Fecha: ${new Date().toLocaleDateString()}</small>
+                <hr style="margin: 10px 0; border-color: #444;">
+            `;
+            
+            document.getElementById('exposedsContainer').prepend(exposedItem);
+            
+            // Limpiar formulario
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDesc').value = '';
+            document.getElementById('postImage').value = '';
+            
+            alert('✅ Exposed publicado exitosamente!');
+        }
+        
+        // Verificar si ya está logueado
+        if (localStorage.getItem('hmfb_admin')) {
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('loginStatus').innerHTML = '<span style="color: green;">✅ Sesión activa como Admin</span>';
+        }
+    </script>
+    
+    <footer>
+        © 2025 HMFB Exposeds Staffs. All rights reserved. <br>
+        Contacto: <a href="mailto:admin@hmfb.com">admin@hmfb.com</a>
+    </footer>
+</body>
+</html>

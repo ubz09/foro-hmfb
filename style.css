@@ -1,0 +1,33 @@
+/* Estilos originales manteniendo el tema oscuro */
+body { 
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #1a1a1a; 
+    color: #b4b4b4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container { 
+    max-width: 800px;
+    margin: 0 auto; 
+    padding: 30px; 
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+h1 {
+    font-size: 48px; 
+    color: #aaaaaa; 
+    margin-bottom: 20px;
+}
+
+p { 
+    font-size: 18px; 
+    color: #b4b4b4; 
+    line-height: 1.6;
+}
+
+.search-bar { 
+    margin: 30px
